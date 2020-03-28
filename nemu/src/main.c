@@ -9,5 +9,6 @@ int main(int argc, char *argv[]) {
   ui_mainloop(is_batch_mode);
 
   //print Hello World;
+  //print test!!
   return 0;
 }
