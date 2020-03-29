@@ -20,8 +20,9 @@ void cpu_exec(uint64_t n) {
   }
   nemu_state = NEMU_RUNNING;
 
-  bool print_flag = n < MAX_INSTR_TO_PRINT;
-  //TODO allow pring 100000 instrs
+  // bool print_flag = n < MAX_INSTR_TO_PRINT;
+  bool print_flag = true;
+  
   for (; n > 0; n --) {
     /* Execute one instruction, including instruction fetch,
      * instruction decode, and the actual execution. */
