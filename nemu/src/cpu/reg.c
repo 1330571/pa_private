@@ -15,14 +15,14 @@ void reg_test() {
   cpu.eip = eip_sample;
 
   int i;
-  for (i = R_EAX; i <= R_EDI; i ++) {
-    sample[i] = rand();
-    reg_l(i) = sample[i];
-    assert(reg_w(i) == (sample[i] & 0xffff));
+  for (i = R_EAX; i <= R_EDI; i ++) { //从第一个寄存器开始测试
+    sample[i] = rand();  //随机生成数字
+    reg_l(i) = sample[i]; //低位设置为随机数
+    assert(reg_w(i) == (sample[i] & 0xffff)); //测试是否能够存储数据
   }
 
-  assert(reg_b(R_AL) == (sample[R_EAX] & 0xff));
-  assert(reg_b(R_AH) == ((sample[R_EAX] >> 8) & 0xff));
+  assert(reg_b(R_AL) == (sample[R_EAX] & 0xff));  //高位 和 低位 是否正确实现的判断
+  assert(reg_b(R_AH) == ((sample[R_EAX] >> 8) & 0xff)); 
   assert(reg_b(R_BL) == (sample[R_EBX] & 0xff));
   assert(reg_b(R_BH) == ((sample[R_EBX] >> 8) & 0xff));
   assert(reg_b(R_CL) == (sample[R_ECX] & 0xff));
