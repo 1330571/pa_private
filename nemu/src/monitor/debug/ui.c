@@ -43,19 +43,21 @@ static int cmd_si(char *args){
   int num = 1;
   if(args)num = atoi(args);
   cpu_exec(num);
+  return 0;
 }
 
 static int cmd_info(char *args){
   Log("parameters: %s",args);
-  if(args == "r"){
+  if(args[0] == "r"){
     for(int i = 0 ; i < 8 ; ++i)
       printf("%s:\t%8x\t%d",regsl[i],cpu.gpr[0]._32,cpu.gpr[0]._32);
     printf("%s:\t%8x\t%d","cpu.eip",cpu.eip,cpu.eip);
-  }else if (args == "w"){
+  }else if (args[0] == "w"){
     //TODO work that in PA1.3
   }else{
     printf("Unknown parameter\n");
   }
+  return 0;
 }
 static struct {
   char *name;
