@@ -48,11 +48,11 @@ static int cmd_si(char *args){
 
 static int cmd_info(char *args){
   Log("parameters: %s",args);
-  if(args[0] == "r"){
+  if(args[0] == 'r'){
     for(int i = 0 ; i < 8 ; ++i)
       printf("%s:\t%8x\t%d",regsl[i],cpu.gpr[0]._32,cpu.gpr[0]._32);
     printf("%s:\t%8x\t%d","cpu.eip",cpu.eip,cpu.eip);
-  }else if (args[0] == "w"){
+  }else if (args[0] == 'w'){
     //TODO work that in PA1.3
   }else{
     printf("Unknown parameter\n");
