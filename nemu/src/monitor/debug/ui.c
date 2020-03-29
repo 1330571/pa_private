@@ -38,6 +38,25 @@ static int cmd_q(char *args) {
 
 static int cmd_help(char *args);
 
+static int cmd_si(char *args){
+  Log("parameters: %s",args);
+  int num = 1;
+  if(args)num = atoi(args);
+  cpu_exec(num);
+}
+
+static int cmd_info(char *args){
+  Log("parameters: %s",args);
+  if(args == "r"){
+    for(int i = 0 ; i < 8 ; ++i)
+      printf("%s:\t%8x\t%d",regsl[i],cpu.gpr[0]._32,cpu.gpr[0]._32);
+    printf("%s:\t%8x\t%d","cpu.eip",cpu.eip,cpu.eip);
+  }else if (args == "w"){
+    //TODO work that in PA1.3
+  }else{
+    printf("Unknown parameter\n");
+  }
+}
 static struct {
   char *name;
   char *description;
@@ -46,7 +65,8 @@ static struct {
   { "help", "Display informations about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
-
+  { "si [num]","Step forward",cmd_si},
+  {"info [r,w]","Display informations about regs",cmd_info},
   /* TODO: Add more commands */
 
 };
@@ -83,8 +103,8 @@ void ui_mainloop(int is_batch_mode) {
   }
 
   while (1) {
-    char *str = rl_gets();
-    char *str_end = str + strlen(str);
+    char *str = rl_gets(); //读入命令
+    char *str_end = str + strlen(str); //命令尾的地址
 
     /* extract the first token as the command */
     char *cmd = strtok(str, " ");
@@ -93,9 +113,9 @@ void ui_mainloop(int is_batch_mode) {
     /* treat the remaining string as the arguments,
      * which may need further parsing
      */
-    char *args = cmd + strlen(cmd) + 1;
+    char *args = cmd + strlen(cmd) + 1;//args的位置从 指向cmd后第一个字符
     if (args >= str_end) {
-      args = NULL;
+      args = NULL;//没有参数
     }
 
 #ifdef HAS_IOE
@@ -106,7 +126,7 @@ void ui_mainloop(int is_batch_mode) {
     int i;
     for (i = 0; i < NR_CMD; i ++) {
       if (strcmp(cmd, cmd_table[i].name) == 0) {
-        if (cmd_table[i].handler(args) < 0) { return; }
+        if (cmd_table[i].handler(args) < 0) { return; } //执行
         break;
       }
     }
