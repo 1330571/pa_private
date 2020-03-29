@@ -17,7 +17,7 @@ void reg_test() {
   int i;
   for (i = R_EAX; i <= R_EDI; i ++) { //从第一个寄存器开始测试
     sample[i] = rand();  //随机生成数字
-    reg_l(i) = sample[i]; //低位设置为随机数
+    reg_l(i) = sample[i]; //对应寄存器设置为随机数
     assert(reg_w(i) == (sample[i] & 0xffff)); //测试是否能够存储数据
   }
 
