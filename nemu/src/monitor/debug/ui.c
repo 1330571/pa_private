@@ -93,15 +93,16 @@ char *start = strtok(NULL," ");
 #endif
   if(num && start){
     printf("Address    Dword block ... Byte sequence\n");
-    vaddr_t startAddr = atoi(start);
+    vaddr_t startAddr;
+    sscanf(start,"%x",&startAddr);
     int len = atoi(num);
     for(int i = 0 ; i < len ; ++i){
-      uint32_t mem = vaddr_read(startAddr,8);
+      uint32_t mem = vaddr_read(startAddr,4);
       startAddr += i*4;
       printf("0x%08x  0x%08x ... %02x %02x %02x %02x\n",startAddr,mem,mem & 0xff,mem & 0xff00 ,mem & 0xff0000,mem& 0xff000000);
   }
   }else {
-    printf("not enough parameters, if confused, type help to see more");
+    printf("not enough parameters, if confused, type help to see more\n");
   }
 return 0;
 }
