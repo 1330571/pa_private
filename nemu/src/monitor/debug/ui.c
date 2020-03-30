@@ -88,7 +88,7 @@ static int cmd_x(char *args)
 char *num = strtok(args,' ');
 char *start = strtok(num+1,' ');
 #ifdef DEBUG
-  Log("parameters: %S %S",num,start);
+  Log("parameters: %s %s",num,start);
   Log("parameters: %s", args);
 #endif
 }
