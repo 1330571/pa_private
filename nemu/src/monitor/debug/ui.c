@@ -65,8 +65,8 @@ static int cmd_info(char *args)
     if (args[0] == 'r')
     {
       for (int i = 0; i < 8; ++i)
-        printf("%s:    0X%-8X    %d\n", regsl[i], cpu.gpr[i]._32, cpu.gpr[i]._32);
-      printf("%s:    0x%-8X    %d\n", "eip", cpu.eip, cpu.eip);
+        printf("%s:    0X%08X    %d\n", regsl[i], cpu.gpr[i]._32, cpu.gpr[i]._32);
+      printf("%s:    0x%08X    %d\n", "eip", cpu.eip, cpu.eip);
     }
     else if (args[0] == 'w')
     {
@@ -91,6 +91,15 @@ char *start = strtok(num+1," ");
   Log("parameters: %s %s",num,start);
   Log("parameters: %s", args);
 #endif
+  printf("Address    Dword block ... Byte sequence\n");
+  vaddr_t start;
+  int len;
+  for(int i = 0 ; i < len ; ++i){
+    uint32_t mem = vaddr_read(start,8);
+    start += i*8;
+    printf("0x%08x  0x%08x ... %02x %02x %02x %02x\n",start,mem,mem,mem,mem,mem);
+    //FIXME 
+  }
 return 0;
 }
 static struct
