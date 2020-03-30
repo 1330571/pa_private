@@ -92,12 +92,12 @@ char *start = strtok(num+1," ");
   Log("parameters: %s", args);
 #endif
   printf("Address    Dword block ... Byte sequence\n");
-  vaddr_t start;
+  vaddr_t startAddr;
   int len;
   for(int i = 0 ; i < len ; ++i){
-    uint32_t mem = vaddr_read(start,8);
-    start += i*8;
-    printf("0x%08x  0x%08x ... %02x %02x %02x %02x\n",start,mem,mem,mem,mem,mem);
+    uint32_t mem = vaddr_read(startAddr,8);
+    startAddr += i*8;
+    printf("0x%08x  0x%08x ... %02x %02x %02x %02x\n",startAddr,mem,mem,mem,mem,mem);
     //FIXME 
   }
 return 0;
