@@ -92,7 +92,7 @@ char *start = strtok(num+1," ");
   Log("parameters: %s", args);
 #endif
   printf("Address    Dword block ... Byte sequence\n");
-  vaddr_t startAddr;
+  vaddr_t startAddr = 0x10000;
   int len = 2;
   for(int i = 0 ; i < len ; ++i){
     uint32_t mem = vaddr_read(startAddr,8);
