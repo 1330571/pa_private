@@ -91,6 +91,7 @@ char *start = strtok(num+1," ");
   Log("parameters: %s %s",num,start);
   Log("parameters: %s", args);
 #endif
+return 0;
 }
 static struct
 {
