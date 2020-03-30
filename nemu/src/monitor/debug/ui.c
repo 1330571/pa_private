@@ -85,8 +85,8 @@ static int cmd_info(char *args)
 static int cmd_x(char *args)
 {
 //split the string
-char *num = strtok(args,' ');
-char *start = strtok(num+1,' ');
+char *num = strtok(args," ");
+char *start = strtok(num+1," ");
 #ifdef DEBUG
   Log("parameters: %s %s",num,start);
   Log("parameters: %s", args);
