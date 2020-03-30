@@ -85,20 +85,23 @@ static int cmd_info(char *args)
 static int cmd_x(char *args)
 {
 //split the string
-char *num = strtok(args," ");
-char *start = strtok(num+1," ");
+char *num = strtok(NULL," ");
+char *start = strtok(NULL," ");
 #ifdef DEBUG
   Log("parameters: %s %s",num,start);
   Log("parameters: %s", args);
 #endif
-  printf("Address    Dword block ... Byte sequence\n");
-  vaddr_t startAddr = 0x10000;
-  int len = 2;
-  for(int i = 0 ; i < len ; ++i){
-    uint32_t mem = vaddr_read(startAddr,8);
-    startAddr += i*8;
-    printf("0x%08x  0x%08x ... %02x %02x %02x %02x\n",startAddr,mem,mem,mem,mem,mem);
-    //FIXME 
+  if(num && start){
+    printf("Address    Dword block ... Byte sequence\n");
+    vaddr_t startAddr = atoi(start);
+    int len = atoi(num);
+    for(int i = 0 ; i < len ; ++i){
+      uint32_t mem = vaddr_read(startAddr,8);
+      startAddr += i*4;
+      printf("0x%08x  0x%08x ... %02x %02x %02x %02x\n",startAddr,mem,mem & 0xff,mem & 0xff00 ,mem & 0xff0000,mem& 0xff000000);
+  }
+  }else {
+    printf("not enough parameters, if confused, type help to see more");
   }
 return 0;
 }
