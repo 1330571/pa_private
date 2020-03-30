@@ -98,7 +98,7 @@ char *start = strtok(NULL," ");
     int len = atoi(num);
     for(int i = 0 ; i < len ; ++i){
       uint32_t mem = vaddr_read(startAddr,4);
-      startAddr += i*4;
+      startAddr += 4;
       printf("0x%08x  0x%08x ... %02x %02x %02x %02x\n",startAddr,mem,mem & 0xff,(mem & 0xff00)>>8 ,(mem & 0xff0000)>>16,(mem& 0xff000000) >> 24);
   }
   }else {
