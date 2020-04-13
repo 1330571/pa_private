@@ -7,24 +7,40 @@
 #include <regex.h>
 
 enum { //Token类型枚举
-  TK_NOTYPE = 256, TK_EQ
-
+  TK_NOTYPE = 256, TK_EQ,TK_HEX_NUM,TK_NUM,
+  TK_REG
   /* TODO: Add more token types */
 
 };
-
+//Mission 1.1 编写规则
+/*
+十进制数字、十六进制数字，如 0x1234，567；
+现阶段所定义的 9 个寄存器，如 $eax, $ebx；
+左括号、右括号；
+加号、减号、乘号、除号；
+空格串（一个或多个空格）;
+*/
 static struct rule {
   char *regex;
   int token_type;
 } rules[] = {
-
   /* TODO: Add more rules.
    * Pay attention to the precedence level of different rules.
    */
-
   {" +", TK_NOTYPE},    // spaces
   {"\\+", '+'},         // plus
-  {"==", TK_EQ}         // equal
+  {"==", TK_EQ},         // equal
+  //2020-4-13 日 Version 1.00
+  {"0x[0-9]+",TK_HEX_NUM}, //Hex number 
+  {"[0-9]+",TK_NUM},
+  {"-",'-'},
+  {"\\*",'*'},
+  {"/",'/'},
+  {"(",'('},
+  {")",')'},
+
+  {"\\$[eax,ecx,edx,ebx,esp,ebp,esi,edi,eip]",TK_REG}
+
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -80,7 +96,12 @@ static bool make_token(char *e) {
          */
 
         switch (rules[i].token_type) {
-          default: TODO();
+          case TK_NOTYPE:
+            break;
+          // default: TODO();
+          default:
+            tokens[nr_token].type = rules[i].token_type;
+            //FIXME: str
         }
 
         break;
@@ -89,7 +110,7 @@ static bool make_token(char *e) {
 
     if (i == NR_REGEX) {
       printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
-      return false;
+      return false; //没有搜索到合法的表达式
     }
   }
 
