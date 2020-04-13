@@ -201,8 +201,8 @@ uint32_t eval(int p,int q){
     int pos = find_dominated_op(p,q,success);
     if(*success == true){
       int op = tokens[pos].type;
-      uint32_t val1 = eval(p,op-1);
-      uint32_t val2 = eval(op+1,q);
+      uint32_t val1 = eval(p,pos-1);
+      uint32_t val2 = eval(pos+1,q);
       switch(op){
         case '+':return val1+val2;
         case '-':return val1-val2;
