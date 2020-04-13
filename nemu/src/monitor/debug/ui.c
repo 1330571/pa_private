@@ -108,6 +108,10 @@ return 0;
 }
 
 static int cmd_p(char *args){
+  if(args == NULL){
+    printf("Please enter the expressions\n");
+    return 0;
+  }
   bool *success = NULL;
   expr(args,success);
   return 0;
