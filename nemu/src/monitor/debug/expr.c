@@ -178,6 +178,7 @@ uint32_t find_dominated_op(int p,int q,bool *success){
         *success = true;
       }
    }
+   ++p;
  }
  return pos;
 }
