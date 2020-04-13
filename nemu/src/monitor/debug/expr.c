@@ -171,7 +171,7 @@ uint32_t find_dominated_op(int p,int q,bool *success){
  while(p < q){
    ++p;
 
-   if(tokens[p].type == TK_HEX_NUM || tokens[p].type == TK_NUM) continue;
+   if(tokens[p].type == TK_HEX_NUM || tokens[p].type == TK_NUM || tokens[p].type == TK_REG) continue;
    if(tokens[p].type == '(')++depth;
    else if(tokens[p].type == ')')--depth;
    else if(!depth){
