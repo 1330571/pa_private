@@ -126,7 +126,7 @@ static struct
     {"si", "[num] Step forward", cmd_si},
     {"info", "[r,w] Display informations about regs", cmd_info},
     {"x", "(length) (start_addr) Display address from start_addr to start_addr + len", cmd_x},
-    {"p", "calculate the expression supporting regs and pointers,cmd_p"}
+    {"p", "calculate the expression supporting regs and pointers",cmd_p}
     /* TODO: Add more commands */
 
 };
