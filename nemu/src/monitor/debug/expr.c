@@ -177,7 +177,7 @@ uint32_t find_dominated_op(int p,int q,bool *success){
    else if(!depth){
      int priority1 = getPriority(tokens[pos].type);
      int priority2 = getPriority(tokens[p].type);
-      if(priority2 < priority1){
+      if(priority2 <= priority1){
         pos = p;//转移中心操作符号
         *success = true;
       }
@@ -195,8 +195,16 @@ uint32_t eval(int p,int q){
   }
   else if(p == q){
     //Single Token
-    int res;
-    sscanf(tokens[p].str,"%d",&res);//将str的内容赋值到res变量中
+    uint32_t res;
+    if(tokens[p].type == TK_REG){
+      for(int i = 0 ; i < 8 ; ++i){
+        if (strcmp(tokens[p].str+1,regsl[i]) == 0)
+          res = cpu.gpr[i]._32;
+      }
+      if(strcmp(tokens[p].str,"$eip") == 0)
+        res = cpu.eip;
+    }
+    else sscanf(tokens[p].str,"%d",&res);//将str的内容赋值到res变量中
     return res;
   }
   else if (check_parentheses(p,q) == true){
