@@ -137,6 +137,7 @@ bool check_parentheses(int p,int q){
         printf("Bad Expression\n");
         return false;
       }
+      ++p;
     }
     if(l_cnt == 0){
       printf("expression is surrounded by parentheses\n");
