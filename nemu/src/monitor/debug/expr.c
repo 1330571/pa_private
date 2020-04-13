@@ -153,6 +153,8 @@ bool check_parentheses(int p,int q){
 int getPriority(int type){
   if(type == '+' || type == '-') return 10;
   if(type == '*' || type == '/') return 20;
+  printf("Type: %d Unknown Type\n",type);
+  return -1;//Error
 }
 
 uint32_t find_dominated_op(int p,int q,bool *success){
