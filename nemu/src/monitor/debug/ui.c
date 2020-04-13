@@ -113,7 +113,8 @@ static int cmd_p(char *args){
     return 0;
   }
   bool *success = (bool*)malloc(sizeof(bool));
-  expr(args,success);
+  uint32_t result = expr(args,success);
+  printf("Result: %d\n",result);
   free(success);
   return 0;
   //FIXME: return ?

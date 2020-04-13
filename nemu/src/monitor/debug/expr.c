@@ -126,15 +126,104 @@ static bool make_token(char *e) {
   return true;
 }
 
+bool check_parentheses(int p,int q){
+  //TODO Check if valid?
+  if(tokens[p].type == '(' && tokens[q].type == ')'){
+    int l_cnt = 0;
+    while(p <= q){
+      if(tokens[p].type == '(') ++l_cnt;
+      if(tokens[p].type == ')') --l_cnt;
+      if(l_cnt < 0){
+        printf("Bad Expression\n");
+        return false;
+      }
+    }
+    if(l_cnt == 0){
+      printf("expression is surrounded by parentheses\n");
+      return true;
+    }else{
+      printf("Bad Expression\n");
+      return false;
+    }
+  }
+  printf("expression is not surrounded by parentheses\n");
+  return false;// 没有被括号包围.
+}
+
+int getPriority(int type){
+  if(type == '+' || type == '-') return 10;
+  if(type == '*' || type == '/') return 20;
+}
+
+uint32_t find_dominated_op(int p,int q,bool *success){
+  //指导思想: 优先级最低 最右边,不在括号里
+  /* + - 优先级 10
+     x / 优先级 20
+     ()  不记录优先级
+  */
+ *success = false;
+ int pos = p;
+ int depth = 0;
+ while(p <= q){
+   if(tokens[p].type == TK_HEX_NUM || tokens[p].type == TK_NUM) continue;
+   if(tokens[p].type == '(')++depth;
+   else if(tokens[p].type == ')')--depth;
+   else if(!depth){
+     int priority1 = getPriority(tokens[pos].type);
+     int priority2 = getPriority(tokens[p].type);
+      if(priority2 < priority1){
+        pos = p;//转移中心操作符号
+        *success = true;
+      }
+   }
+ }
+ return pos;
+}
+
+uint32_t eval(int p,int q){
+  if(p > q){
+    //BAD 
+    printf("Bad Expression, Something Went Wrong\n");
+    return 0;
+  }
+  else if(p == q){
+    //Single Token
+    int res;
+    sscanf(tokens[p].str,"%d",&res);//将str的内容赋值到res变量中
+    return res;
+  }
+  else if (check_parentheses(p,q) == true){
+    return eval(p+1,q-1);//脱掉括号
+  }else{
+    bool *success = (bool*)malloc(sizeof(success));
+    int pos = find_dominated_op(p,q,success);
+    if(success){
+      int op = tokens[pos].type;
+      uint32_t val1 = eval(p,op-1);
+      uint32_t val2 = eval(op+1,q);
+      switch(op){
+        case '+':return val1+val2;
+        case '-':return val1-val2;
+        case '*':return val1*val2;
+        case '/':return val1/val2;
+        default:
+          printf("Error Type\n");
+          assert(0);
+      }
+    }
+    free(success);
+  }
+}
+
 uint32_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
-    printf("make_token error and get return value\n");
+    printf("illegal expression\n");
     return 0;
   }
 
   /* TODO: Insert codes to evaluate the expression. */
   // TODO(); 2020/4/13 PA 1.2 Version 1.0.0
+  return eval(0,nr_token-1);
 
-  return 0;
 }
