@@ -101,7 +101,15 @@ static bool make_token(char *e) {
           // default: TODO();
           default:
             tokens[nr_token].type = rules[i].token_type;
-            //FIXME: str
+            //FIXME:  Test Right? Or Not?
+            if(substr_len > 31) substr_len = 31;
+            for(int cnt = 0 ; cnt <= substr_len ; ++cnt){
+              tokens[nr_token].str[cnt] = substr_start[cnt];
+            }
+            #ifdef DEBUG
+              Log("New Token: %s",tokens[nr_token].str);
+            #endif
+            nr_token++;
         }
 
         break;
