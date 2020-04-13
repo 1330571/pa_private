@@ -154,7 +154,7 @@ int getPriority(int type){
   if(type == '+' || type == '-') return 10;
   if(type == '*' || type == '/') return 20;
   printf("Type: %d Unknown Type\n",type);
-  return -1;//Error
+  return 666666;//Error
 }
 
 uint32_t find_dominated_op(int p,int q,bool *success){
@@ -169,6 +169,7 @@ uint32_t find_dominated_op(int p,int q,bool *success){
  --p;
  while(p <= q){
    ++p;
+
    if(tokens[p].type == TK_HEX_NUM || tokens[p].type == TK_NUM) continue;
    if(tokens[p].type == '(')++depth;
    else if(tokens[p].type == ')')--depth;
