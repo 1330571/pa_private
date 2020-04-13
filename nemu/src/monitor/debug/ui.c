@@ -112,7 +112,7 @@ static int cmd_p(char *args){
     printf("Please enter the expressions\n");
     return 0;
   }
-  bool *success = (bool*)alloc(sizeof(bool));
+  bool *success = (bool*)malloc(sizeof(bool));
   expr(args,success);
   free(success);
   return 0;
