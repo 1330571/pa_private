@@ -108,7 +108,7 @@ return 0;
 }
 
 static int cmd_p(char *args){
-  bool *success;
+  bool *success = NULL;
   expr(args,success);
   return 0;
   //FIXME: return ?
