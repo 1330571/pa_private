@@ -129,11 +129,12 @@ static bool make_token(char *e) {
 uint32_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
+    printf("make_token error and get return value\n");
     return 0;
   }
 
   /* TODO: Insert codes to evaluate the expression. */
-  TODO();
+  // TODO(); 2020/4/13 PA 1.2 Version 1.0.0
 
   return 0;
 }
