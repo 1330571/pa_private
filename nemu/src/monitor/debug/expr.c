@@ -167,7 +167,7 @@ uint32_t find_dominated_op(int p,int q,bool *success){
  int pos = p;
  int depth = 0;
  --p;
- while(p <= q){
+ while(p < q){
    ++p;
 
    if(tokens[p].type == TK_HEX_NUM || tokens[p].type == TK_NUM) continue;
@@ -217,6 +217,9 @@ uint32_t eval(int p,int q){
           printf("Error Type\n");
           assert(0);
       }
+    }else{
+      printf("Fatal Error In Eval Func No dominated op detected\n");
+      assert(0);
     }
     free(success);
   }
