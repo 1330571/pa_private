@@ -39,7 +39,7 @@ static struct rule {
   {"\\(",'('},
   {"\\)",')'},
 
-  {"\\$[eax,ecx,edx,ebx,esp,ebp,esi,edi,eip]",TK_REG}
+  {"\\$(eax|ecx|edx|ebx|esp|ebp|esi|edi|eip)",TK_REG}
 
 };
 
