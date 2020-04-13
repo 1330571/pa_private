@@ -215,6 +215,8 @@ uint32_t eval(int p,int q){
     }
     free(success);
   }
+  printf("Fatal Error In Eval Func\n");
+  return 0;
 }
 
 uint32_t expr(char *e, bool *success) {
