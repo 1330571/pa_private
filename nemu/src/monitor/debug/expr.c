@@ -166,7 +166,9 @@ uint32_t find_dominated_op(int p,int q,bool *success){
  *success = false;
  int pos = p;
  int depth = 0;
+ --p;
  while(p <= q){
+   ++p;
    if(tokens[p].type == TK_HEX_NUM || tokens[p].type == TK_NUM) continue;
    if(tokens[p].type == '(')++depth;
    else if(tokens[p].type == ')')--depth;
@@ -178,8 +180,8 @@ uint32_t find_dominated_op(int p,int q,bool *success){
         *success = true;
       }
    }
-   ++p;
  }
+
  return pos;
 }
 
