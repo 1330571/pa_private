@@ -106,6 +106,14 @@ char *start = strtok(NULL," ");
   }
 return 0;
 }
+
+static int cmd_p(char *args){
+  bool success;
+  expr(args,success);
+  return 0;
+  //FIXME: return ?
+}
+
 static struct
 {
   char *name;
@@ -117,7 +125,8 @@ static struct
     {"q", "Exit NEMU", cmd_q},
     {"si", "[num] Step forward", cmd_si},
     {"info", "[r,w] Display informations about regs", cmd_info},
-    {"x", "(length) (start_addr) Display address from start_addr to start_addr + len", cmd_x}
+    {"x", "(length) (start_addr) Display address from start_addr to start_addr + len", cmd_x},
+    {"p", "calculate the expression supporting regs and pointers,cmd_p"}
     /* TODO: Add more commands */
 
 };
