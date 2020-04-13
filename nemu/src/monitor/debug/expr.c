@@ -197,7 +197,7 @@ uint32_t eval(int p,int q){
   }else{
     bool *success = (bool*)malloc(sizeof(success));
     int pos = find_dominated_op(p,q,success);
-    if(success){
+    if(*success == true){
       int op = tokens[pos].type;
       uint32_t val1 = eval(p,op-1);
       uint32_t val2 = eval(op+1,q);
