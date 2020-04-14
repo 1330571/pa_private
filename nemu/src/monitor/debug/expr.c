@@ -214,6 +214,7 @@ uint32_t eval(int p,int q){
     int pos = find_dominated_op(p,q,success);
     printf("p=%d,q=%d,dominated=%d\n",p,q,pos);
     if(*success == true){
+      free(success);
       int op = tokens[pos].type;
       uint32_t val1 = eval(p,pos-1);
       uint32_t val2 = eval(pos+1,q);
@@ -224,11 +225,9 @@ uint32_t eval(int p,int q){
         case '/':return val1/val2;
         default:
           printf("Error Type\n");
-          assert(0);
       }
     }else{
       printf("Fatal Error In Eval Func No dominated op detected\n");
-      assert(0);
     }
     free(success);
   }
