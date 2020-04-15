@@ -238,13 +238,13 @@ uint32_t eval(int p,int q){
     //此时要考虑一元运算符
     bool *success = (bool*)malloc(sizeof(bool));
     int pos = find_dominated_op(p,q,success);
-    printf("p=%d,q=%d,dominated=%d\n",p,q,pos);
+    printf("p= % d,q= % d,dominated = %d,value = %d\n",p,q,pos,tokens[pos].type);
 
     if(*success == true){
       free(success);
       int op = tokens[pos].type;
       
-      if(op == p){
+      if(pos == p){
         //此时考虑!问题 
         //TODO TK_NOT TK_PTR
         //第一个就是 主运算符
