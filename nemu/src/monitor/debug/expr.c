@@ -87,6 +87,9 @@ static bool make_token(char *e) {
 
   nr_token = 0;
   int op = 1;///OP 表征 之前是否是符号 以此来区别 负数
+  if(op){
+    //pass
+  }
   while (e[position] != '\0') {
     /* Try all rules one by one. */
     for (i = 0; i < NR_REGEX; i ++) {
@@ -232,7 +235,7 @@ uint32_t eval(int p,int q){
     if(*success == true){
       free(success);
       int op = tokens[pos].type;
-      
+
       uint32_t val1 = eval(p,pos-1);
       uint32_t val2 = eval(pos+1,q);
 
