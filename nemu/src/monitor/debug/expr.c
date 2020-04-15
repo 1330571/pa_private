@@ -252,7 +252,7 @@ uint32_t eval(int p,int q){
           case TK_PTR:
           case TK_NGA:
           default:
-
+            printf("Error Type...Check\n");
         }
       }
       
