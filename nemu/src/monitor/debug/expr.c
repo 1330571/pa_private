@@ -224,7 +224,7 @@ uint32_t eval(int p,int q){
   }
   else if(p == q){
     //Single Token
-    uint32_t res;
+    uint32_t res = 0;
     if(tokens[p].type == TK_REG){
       for(int i = 0 ; i < 8 ; ++i){
         if (strcmp(tokens[p].str+1,regsl[i]) == 0)
