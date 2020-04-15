@@ -9,7 +9,7 @@
 enum { //Token类型枚举
   TK_NOTYPE = 256, TK_EQ,TK_HEX_NUM,TK_NUM,
   TK_REG,
-  TK_AND,TK_OR,TK_NEQ,TK_NOT,TK_PTR
+  TK_AND,TK_OR,TK_NEQ,TK_NOT,TK_PTR,TK_NGA
   /* TODO: Add more token types */
 
 };
@@ -142,15 +142,17 @@ bool check_parentheses(int p,int q){
   //Check if valid?
   if(tokens[p].type == '(' && tokens[q].type == ')'){
     int l_cnt = 0;
+
     while(p < q){
       if(tokens[p].type == '(') ++l_cnt;
       if(tokens[p].type == ')') --l_cnt;
       if(l_cnt <= 0){
-        printf("Bad Expression\n");
+        printf("Fake parentheses\n");
         return false;
       }
       ++p;
     }
+
     if(tokens[q].type == ')')--l_cnt;
     if(l_cnt == 0){
       printf("expression is surrounded by parentheses\n");
@@ -166,6 +168,7 @@ bool check_parentheses(int p,int q){
 }
 
 int getPriority(int type){
+
   if(type == '+' || type == '-') return 10;
   if(type == '*' || type == '/') return 20;
   if(type == TK_EQ || type == TK_NEQ) return 7;
@@ -173,6 +176,7 @@ int getPriority(int type){
   if(type == TK_OR) return 3;
   if(type == TK_PTR) return 55;
   if(type == TK_NOT) return 66;
+  if(type == TK_NGA) return 67; //负号优先级高
   if(type == TK_NUM || type == TK_HEX_NUM) return 66666;
   printf("Type: %d Unknown Type\n",type);
   return 666666;//Error
@@ -230,6 +234,7 @@ uint32_t eval(int p,int q){
   else if (check_parentheses(p,q) == true){
     return eval(p+1,q-1);//脱掉括号
   }else{
+    //此时要考虑一元运算符
     bool *success = (bool*)malloc(sizeof(bool));
     int pos = find_dominated_op(p,q,success);
     printf("p=%d,q=%d,dominated=%d\n",p,q,pos);
@@ -237,7 +242,20 @@ uint32_t eval(int p,int q){
     if(*success == true){
       free(success);
       int op = tokens[pos].type;
+      
+      if(op == p){
+        //此时考虑!问题 
+        //TODO TK_NOT TK_PTR
+        //第一个就是 主运算符
+        switch(op){
+          case TK_NOT:return (eval(p+1,q) != 0) ? 0 : 1;
+          case TK_PTR:
+          case TK_NGA:
+          default:
 
+        }
+      }
+      
       uint32_t val1 = eval(p,pos-1);
       uint32_t val2 = eval(pos+1,q);
 
@@ -250,7 +268,6 @@ uint32_t eval(int p,int q){
         case TK_OR: return (val1 || val2 != 0) ? 1: 0;
         case TK_EQ: return (val1 == val2) ? 1 : 0;
         case TK_NEQ: return (val1 != val2) ? 1 : 0;
-        //TODO TK_NOT TK_PTR
         default:
           printf("Error Type\n");
       }
