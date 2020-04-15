@@ -139,18 +139,19 @@ static bool make_token(char *e) {
 }
 
 bool check_parentheses(int p,int q){
-  //TODO Check if valid?
+  //Check if valid?
   if(tokens[p].type == '(' && tokens[q].type == ')'){
     int l_cnt = 0;
-    while(p <= q){
+    while(p < q){
       if(tokens[p].type == '(') ++l_cnt;
       if(tokens[p].type == ')') --l_cnt;
-      if(l_cnt < 0){
+      if(l_cnt <= 0){
         printf("Bad Expression\n");
         return false;
       }
       ++p;
     }
+    if(tokens[q].type == ')')--l_cnt;
     if(l_cnt == 0){
       printf("expression is surrounded by parentheses\n");
       return true;
@@ -159,6 +160,7 @@ bool check_parentheses(int p,int q){
       return false;
     }
   }
+
   printf("expression is not surrounded by parentheses\n");
   return false;// 没有被括号包围.
 }
