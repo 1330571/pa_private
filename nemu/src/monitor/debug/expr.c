@@ -120,7 +120,7 @@ static bool make_token(char *e) {
             }
             tokens[nr_token].str[substr_len] = '\0';
             #ifdef DEBUG
-              Log("New Token: %s",tokens[nr_token].str);
+              // Log("New Token: %s",tokens[nr_token].str);
             #endif
             nr_token++;
         }
@@ -251,7 +251,6 @@ uint32_t eval(int p,int q){
       
       if(pos == p){
         //此时考虑!问题 
-        //TODO TK_NOT TK_PTR
         //第一个就是 主运算符
         switch(op){
           case TK_NOT:return (eval(p+1,q) != 0) ? 0 : 1;
