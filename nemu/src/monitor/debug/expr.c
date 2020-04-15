@@ -8,7 +8,8 @@
 
 enum { //Token类型枚举
   TK_NOTYPE = 256, TK_EQ,TK_HEX_NUM,TK_NUM,
-  TK_REG
+  TK_REG,
+  TK_AND,TK_OR,TK_NEQ,TK_NOT,TK_PTR
   /* TODO: Add more token types */
 
 };
@@ -38,6 +39,13 @@ static struct rule {
   {"/",'/'},
   {"\\(",'('},
   {"\\)",')'},
+  
+  {"&&",TK_AND},
+  {"\\|\\|",TK_OR},
+  {"!=",TK_NEQ},
+
+  {"\\*",TK_PTR},
+  {"!",TK_NOT},
 
   {"\\$(eax|ecx|edx|ebx|esp|ebp|esi|edi|eip)",TK_REG}
 
@@ -78,7 +86,7 @@ static bool make_token(char *e) {
   regmatch_t pmatch;
 
   nr_token = 0;
-
+  int op = 1;///OP 表征 之前是否是符号 以此来区别 负数
   while (e[position] != '\0') {
     /* Try all rules one by one. */
     for (i = 0; i < NR_REGEX; i ++) {
@@ -100,8 +108,9 @@ static bool make_token(char *e) {
             break;
           // default: TODO();
           default:
+
             tokens[nr_token].type = rules[i].token_type;
-            //FIXME:  Test Right? Or Not?
+            //FIXME:  negative number
             if(substr_len > 31) substr_len = 31;
             for(int cnt = 0 ; cnt < substr_len ; ++cnt){
               tokens[nr_token].str[cnt] = substr_start[cnt];
@@ -154,6 +163,12 @@ bool check_parentheses(int p,int q){
 int getPriority(int type){
   if(type == '+' || type == '-') return 10;
   if(type == '*' || type == '/') return 20;
+  if(type == TK_EQ || type == TK_NEQ) return 7;
+  if(type == TK_AND)return 5;
+  if(type == TK_OR) return 3;
+  if(type == TK_PTR) return 55;
+  if(type == TK_NOT) return 66;
+  if(type == TK_NUM || type == TK_HEX_NUM) return 66666;
   printf("Type: %d Unknown Type\n",type);
   return 666666;//Error
 }
@@ -223,6 +238,11 @@ uint32_t eval(int p,int q){
         case '-':return val1-val2;
         case '*':return val1*val2;
         case '/':return val1/val2;
+        case TK_AND: return (val1 && val2) ? 1 : 0;
+        case TK_OR: return (val1 || val2 != 0) ? 1: 0;
+        case TK_EQ: return (val1 == val2) ? 1 : 0;
+        case TK_NEQ: return (val1 != val2) ? 1 : 0;
+        //TODO TK_NOT TK_PTR
         default:
           printf("Error Type\n");
       }
