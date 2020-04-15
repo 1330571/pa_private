@@ -293,7 +293,7 @@ uint32_t expr(char *e, bool *success) {
   bool may = true;
   for(int i = 0 ; i <  nr_token ; i++){
     //指导思想: 连续符号则判断为 二义 * 和 -
-    if(tokens[i].type == TK_NUM || tokens[i].type == TK_HEX_NUM || TOKENS[i].type == TK_REG)
+    if(tokens[i].type == TK_NUM || tokens[i].type == TK_HEX_NUM || tokens[i].type == TK_REG)
       may = false;
     else if (tokens[i].type == ')') may =false;
     else{
