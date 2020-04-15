@@ -32,7 +32,7 @@ static struct rule {
   {"\\+", '+'},         // plus
   {"==", TK_EQ},         // equal
   //2020-4-13 日 Version 1.00
-  {"0x[0-9]+",TK_HEX_NUM}, //Hex number 
+  {"0x[0-9a-e]+",TK_HEX_NUM}, //Hex number 
   {"[0-9]+",TK_NUM},
   {"-",'-'},
   {"\\*",'*'},
@@ -163,7 +163,7 @@ bool check_parentheses(int p,int q){
     }
   }
 
-  printf("expression is not surrounded by parentheses\n");
+  // printf("expression is not surrounded by parentheses\n");
   return false;// 没有被括号包围.
 }
 
@@ -206,6 +206,10 @@ uint32_t find_dominated_op(int p,int q,bool *success){
         *success = true;
       }
    }
+   if(depth < 0) { //Error
+     *success = false;
+     return 0;
+   }
  }
 
  return pos;
@@ -239,7 +243,7 @@ uint32_t eval(int p,int q){
     //此时要考虑一元运算符
     bool *success = (bool*)malloc(sizeof(bool));
     int pos = find_dominated_op(p,q,success);
-    printf("p= % d,q= % d,dominated = %d,value = %d\n",p,q,pos,tokens[pos].type);
+    // printf("p= % d,q= % d,dominated = %d,value = %d\n",p,q,pos,tokens[pos].type);
 
     if(*success == true){
       free(success);
