@@ -201,7 +201,7 @@ uint32_t find_dominated_op(int p,int q,bool *success){
    else if(!depth){
      int priority1 = getPriority(tokens[pos].type);
      int priority2 = getPriority(tokens[p].type);
-      if(priority2 <= priority1){
+      if(priority2 < priority1){
         pos = p;//转移中心操作符号
         *success = true;
       }
@@ -212,6 +212,7 @@ uint32_t find_dominated_op(int p,int q,bool *success){
 }
 
 uint32_t eval(int p,int q){
+  printf("eval ... %d To %d\n",p,q);
   if(p > q){
     //BAD 
     printf("Bad Expression, Something Went Wrong\n");
