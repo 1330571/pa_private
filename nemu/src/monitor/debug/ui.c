@@ -93,9 +93,12 @@ char *start = strtok(NULL," ");
 #endif
   if(num && start){
     printf("Address    Dword block ... Byte sequence\n");
-    vaddr_t startAddr;
-    sscanf(start,"%x",&startAddr);
-    int len = atoi(num);
+    // vaddr_t startAddr;
+    // sscanf(start,"%x",&startAddr);
+    // int len = atoi(num);
+    bool success;
+    uint32_t startAddr = expr(start,&success);
+    uint32_t len = expr(num,success);
     for(int i = 0 ; i < len ; ++i){
       uint32_t mem = vaddr_read(startAddr,4);
       printf("0x%08x  0x%08x ... %02x %02x %02x %02x\n",startAddr,mem,mem & 0xff,(mem & 0xff00)>>8 ,(mem & 0xff0000)>>16,(mem& 0xff000000) >> 24);
