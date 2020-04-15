@@ -229,8 +229,8 @@ uint32_t eval(int p,int q){
       if(strcmp(tokens[p].str,"$eip") == 0)
         res = cpu.eip;
     }
-    else if(tokens[p].str==TK_NUM) sscanf(tokens[p].str,"%d",&res);//将str的内容赋值到res变量中
-    else if(tokens[p].str==TK_HEX_NUM) sscanf(tokens[p].str,"%x",&res);//16进制
+    else if(tokens[p].type==TK_NUM) sscanf(tokens[p].str,"%d",&res);//将str的内容赋值到res变量中
+    else if(tokens[p].type==TK_HEX_NUM) sscanf(tokens[p].str,"%x",&res);//16进制
     return res;
   }
   else if (check_parentheses(p,q) == true){
