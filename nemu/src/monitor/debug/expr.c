@@ -188,7 +188,7 @@ uint32_t find_dominated_op(int p,int q,bool *success){
      x / 优先级 20
      ()  不记录优先级
   */
- *success = false;
+ *success = true;//FIXME: Didn't find sometime it will die
  int pos = p;
  int depth = 0;
  --p;
