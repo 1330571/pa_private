@@ -8,8 +8,8 @@
 
 enum { //Token类型枚举
   TK_NOTYPE = 256, TK_EQ,TK_HEX_NUM,TK_NUM,
-  TK_REG,
-  TK_AND,TK_OR,TK_NEQ,TK_NOT,TK_PTR,TK_NGA
+  TK_REG, //寄存器
+  TK_AND,TK_OR,TK_NEQ,TK_NOT,TK_PTR,TK_NGA //NGA: 负数 PTR: 指针 NOT: 逻辑运算
   /* TODO: Add more token types */
 
 };
@@ -147,7 +147,7 @@ bool check_parentheses(int p,int q){
       if(tokens[p].type == '(') ++l_cnt;
       if(tokens[p].type == ')') --l_cnt;
       if(l_cnt <= 0){
-        printf("Fake parentheses\n");
+        // printf("Fake parentheses\n");
         return false;
       }
       ++p;
@@ -155,7 +155,7 @@ bool check_parentheses(int p,int q){
 
     if(tokens[q].type == ')')--l_cnt;
     if(l_cnt == 0){
-      printf("expression is surrounded by parentheses\n");
+      // printf("expression is surrounded by parentheses\n");
       return true;
     }else{
       printf("Bad Expression\n");
@@ -212,7 +212,7 @@ uint32_t find_dominated_op(int p,int q,bool *success){
 }
 
 uint32_t eval(int p,int q){
-  printf("eval ... %d To %d\n",p,q);
+  // printf("eval ... %d To %d\n",p,q);
   if(p > q){
     //BAD 
     printf("Bad Expression, Something Went Wrong\n");
@@ -229,7 +229,8 @@ uint32_t eval(int p,int q){
       if(strcmp(tokens[p].str,"$eip") == 0)
         res = cpu.eip;
     }
-    else sscanf(tokens[p].str,"%d",&res);//将str的内容赋值到res变量中
+    else if(tokens[p].str==TK_NUM) sscanf(tokens[p].str,"%d",&res);//将str的内容赋值到res变量中
+    else if(tokens[p].str==TK_HEX_NUM) sscanf(tokens[p].str,"%x",&res);//16进制
     return res;
   }
   else if (check_parentheses(p,q) == true){
