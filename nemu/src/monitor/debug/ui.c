@@ -173,6 +173,7 @@ static int cmd_help(char *args)
 
 void ui_mainloop(int is_batch_mode)
 {
+  vaddr_write(0,4,666);
   if (is_batch_mode)
   {
     cmd_c(NULL);
