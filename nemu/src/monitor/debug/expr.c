@@ -250,8 +250,8 @@ uint32_t eval(int p,int q){
         //第一个就是 主运算符
         switch(op){
           case TK_NOT:return (eval(p+1,q) != 0) ? 0 : 1;
-          case TK_PTR:
-          case TK_NGA:
+          case TK_PTR:return vaddr_read(eval(p+1,q),4);
+          case TK_NGA:return (-1 * eval(p+1,q));
           default:
             printf("Error Type...Check\n");
         }
@@ -288,9 +288,23 @@ uint32_t expr(char *e, bool *success) {
     printf("illegal expression\n");
     return 0;
   }
-
   /* TODO: Insert codes to evaluate the expression. */
-  // TODO(); 2020/4/13 PA 1.2 Version 1.0.0
+  //此处用作处理 负数 和 取地址.
+  bool may = true;
+  for(int i = 0 ; i <  nr_token ; i++){
+    //指导思想: 连续符号则判断为 二义 * 和 -
+    if(tokens[i].type == TK_NUM || tokens[i].type == TK_HEX_NUM || TOKENS[i].type == TK_REG)
+      may = false;
+    else if (tokens[i].type == ')') may =false;
+    else{
+      if(!may)may = true;
+      else{
+        if(tokens[i].type == '-') tokens[i].type = TK_NGA;
+        if(tokens[i].type == '*') tokens[i].type = TK_PTR;
+      }
+    }
+  }
+  //Time: 2020/4/13 PA 1.2 Version 1.0.0
   return eval(0,nr_token-1);
 
 }
