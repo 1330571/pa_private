@@ -2,6 +2,7 @@
 #include "monitor/expr.h"
 #include "monitor/watchpoint.h"
 #include "nemu.h"
+#include "watchpoint.h"
 
 #include <stdlib.h>
 #include <readline/readline.h>
@@ -70,7 +71,7 @@ static int cmd_info(char *args)
     }
     else if (args[0] == 'w')
     {
-      //TODO work that in PA1.3
+      list_watchpoint();
     }
     else
     {
@@ -123,6 +124,24 @@ static int cmd_p(char *args){
   //FIXME: return ?
 }
 
+static int cmd_w(char *args){
+  if(args == NULL){
+    printf("No arguments given.\n");
+  }else{
+    set_watchpoint(args);
+  }
+  return 1;
+}
+
+static int cmd_d(char *args){
+  if(args == NULL){
+    printf("No arguments given\n");
+    return 0;
+  }
+  delete_watchpoint(atoi(args));
+  return 1;
+}
+
 static struct
 {
   char *name;
@@ -135,7 +154,9 @@ static struct
     {"si", "[num] Step forward", cmd_si},
     {"info", "[r,w] Display informations about regs", cmd_info},
     {"x", "(length) (start_addr) Display address from start_addr to start_addr + len", cmd_x},
-    {"p", "calculate the expression supporting regs and pointers",cmd_p}
+    {"p", "calculate the expression supporting regs and pointers",cmd_p},
+    {"w", "set watchpoint [regName]",cmd_w},
+    {"d", "delete watchpoint [No]",cmd_d}
     /* TODO: Add more commands */
 
 };
@@ -173,7 +194,7 @@ static int cmd_help(char *args)
 
 void ui_mainloop(int is_batch_mode)
 {
-  vaddr_write(0,4,666);
+
   if (is_batch_mode)
   {
     cmd_c(NULL);
