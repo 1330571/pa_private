@@ -73,14 +73,18 @@ int set_watchpoint(char *e)
   // else tmp->old_val = (idx == -1) ? cpu.eip : cpu.gpr[idx]._32;
   bool success;
   tmp->old_val = expr(e,&success);
+
   printf("Set watchpoint #%d\n", cnt++);
   printf("expr\t= %s\n", e);
   printf("old value = %x (%d)\n", tmp->old_val, tmp->old_val);
   
   WP *insert_pos = head;
-  if(insert_pos == NULL) insert_pos = tmp,tmp->next = NULL;
+  printf("Physical Address %d\n",insert_pos);
+
+  if(insert_pos == NULL) head = tmp,tmp->next = NULL;
   else{
     while(insert_pos->next != NULL){
+      printf("Physical Address %d\n",insert_pos);
       insert_pos = insert_pos->next;
     }
     insert_pos->next = tmp,tmp->next = NULL;
