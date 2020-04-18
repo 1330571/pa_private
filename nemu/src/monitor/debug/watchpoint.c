@@ -124,6 +124,7 @@ WP* scan_watchpoint(void){
     if(ptr->new_val != ptr->old_val){
       first_diff = ptr;
     }
+    ptr = ptr->next;
   }
   return first_diff;
 }
