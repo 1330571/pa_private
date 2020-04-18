@@ -27,7 +27,7 @@ void cpu_exec(uint64_t n) {
     /* Execute one instruction, including instruction fetch,
      * instruction decode, and the actual execution. */
     exec_wrapper(print_flag);
-    if(check())nemu_state = NEMU_STOP;
+    if(check()) nemu_state = NEMU_STOP;
     
 #ifdef DEBUG
     /* TODO: check watchpoints here. */

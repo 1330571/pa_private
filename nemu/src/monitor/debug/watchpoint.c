@@ -84,6 +84,15 @@ int set_watchpoint(char *e)
   printf("Set watchpoint #%d\n", cnt++);
   printf("expr\t\t= %s\n", e);
   printf("old value = %x (%d)\n", tmp->old_val, tmp->old_val);
+  
+  WP *insert_pos = head;
+  if(insert_pos == NULL) insert_pos = tmp,tmp->next = NULL;
+  else{
+    while(insert_pos->next != NULL){
+      insert_pos = insert_pos->next;
+    }
+    insert_pos->next = tmp,tmp->next = NULL;
+  }
   return 1;
 }
 
@@ -94,6 +103,7 @@ void list_watchpoint(void)
   while (ptr != NULL)
   {
     printf("%3d %-16s 0x%08X",ptr->NO,ptr->name,ptr->old_val);
+    ptr = ptr->next;
   }
 }
 
