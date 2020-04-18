@@ -5,7 +5,7 @@
 int set_watchpoint(char *e);
 void list_watchpoint(void);
 bool delete_watchpoint(int NO);
-WP* scan_watchpoint(void);
+// WP* scan_watchpoint(void);
 void update_value(void);
 bool check(void);
 typedef struct watchpoint {
