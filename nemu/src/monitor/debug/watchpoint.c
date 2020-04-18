@@ -6,7 +6,7 @@
 
 static WP wp_pool[NR_WP];
 static WP *head, *free_;
-static int cnt = 0;
+static int cnt = 1;
 
 void init_wp_pool()
 {
@@ -76,7 +76,7 @@ int set_watchpoint(char *e)
   tmp->old_val = expr(e,&success);
   tmp->NO = cnt;
   printf("Set watchpoint #%d\n", cnt++);
-  printf("expr\t= %s\n", e);
+  printf("expr      = %s\n", e);
   printf("old value = %x (%d)\n", tmp->old_val, tmp->old_val);
   
   WP *insert_pos = head;
@@ -134,7 +134,7 @@ WP* scan_watchpoint(void){
 void update_value(void){
   WP* ptr = head;
     while(ptr != NULL){
-      ptr->new_val = ptr->old_val;
+      ptr->old_val = ptr->new_val;
       ptr = ptr->next;
   }
 }
@@ -144,10 +144,10 @@ bool check(void){
     if(diff != NULL){
       //hit
       printf("Hit wachtpoint %d at address %d\n",diff->NO,cpu.eip);
-      printf("expr\t\t= %s\n",diff->name);
+      printf("expr      = %s\n",diff->name);
       printf("old value = 0x%08d\n",diff->old_val);
       printf("new value = 0x%08d\n",diff->new_val);
-      printf("program paused");
+      printf("program paused\n");
       //set value 
       update_value();
       return true;
