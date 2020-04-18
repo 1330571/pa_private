@@ -132,6 +132,7 @@ void update_value(void){
   WP* ptr = head;
     while(ptr != NULL){
       ptr->new_val = ptr->old_val;
+      ptr = ptr->next;
   }
 }
 
