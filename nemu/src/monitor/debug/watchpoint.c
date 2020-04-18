@@ -67,12 +67,12 @@ int set_watchpoint(char *e)
     return 0;
   }
 
-  int idx = 66;
-  for (int i = 0; i < 8; ++i)
-  {
-    if (strcmp(e, regsl) == 0)
-      idx = i;
-  }
+  // int idx = 66;
+  // for (int i = 0; i < 8; ++i)
+  // {
+  //   if (strcmp(e, regsl) == 0)
+  //     idx = i;
+  // }
 
   WP *tmp = new_wp();
   strcpy(tmp->name, e);
@@ -81,7 +81,7 @@ int set_watchpoint(char *e)
   bool success;
   tmp->old_val = expr(e,&success);
   printf("Set watchpoint #%d\n", cnt++);
-  printf("expr\t\t= $s\n", e);
+  printf("expr\t\t= %s\n", e);
   printf("old value = %x (%d)\n", tmp->old_val, tmp->old_val);
   return 1;
 }
