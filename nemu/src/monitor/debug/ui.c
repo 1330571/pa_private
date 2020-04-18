@@ -113,14 +113,13 @@ return 0;
 static int cmd_p(char *args){
   if(args == NULL){
     printf("Please enter the expressions\n");
-    return 0;
+    return 1;
   }
   bool *success = (bool*)malloc(sizeof(bool));
   uint32_t result = expr(args,success);
   printf("Result: %d\n",result);
   free(success);
   return 0;
-  //FIXME: return ?
 }
 
 static int cmd_w(char *args){
@@ -129,16 +128,16 @@ static int cmd_w(char *args){
   }else{
     set_watchpoint(args);
   }
-  return 1;
+  return 0;
 }
 
 static int cmd_d(char *args){
   if(args == NULL){
     printf("No arguments given\n");
-    return 0;
+    return 1;
   }
   delete_watchpoint(atoi(args));
-  return 1;
+  return 0;
 }
 
 static struct

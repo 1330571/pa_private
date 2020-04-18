@@ -22,7 +22,6 @@ void init_wp_pool()
   free_ = wp_pool;
 }
 
-//new_wp
 //从free_链表中返回空闲监视点
 //@parameter: idx : Index Of Cpu Regs
 WP *new_wp()
@@ -67,13 +66,6 @@ int set_watchpoint(char *e)
     return 0;
   }
 
-  // int idx = 66;
-  // for (int i = 0; i < 8; ++i)
-  // {
-  //   if (strcmp(e, regsl) == 0)
-  //     idx = i;
-  // }
-
   WP *tmp = new_wp();
   assert(tmp != NULL);
   strcpy(tmp->name, e);
@@ -82,18 +74,28 @@ int set_watchpoint(char *e)
   bool success;
   tmp->old_val = expr(e,&success);
   printf("Set watchpoint #%d\n", cnt++);
-  printf("expr\t\t= %s\n", e);
+  printf("expr\t= %s\n", e);
   printf("old value = %x (%d)\n", tmp->old_val, tmp->old_val);
+  
+  WP *insert_pos = head;
+  if(insert_pos == NULL) insert_pos = tmp,tmp->next = NULL;
+  else{
+    while(insert_pos->next != NULL){
+      insert_pos = insert_pos->next;
+    }
+    insert_pos->next = tmp,tmp->next = NULL;
+  }
   return 1;
 }
 
 void list_watchpoint(void)
 {
   WP *ptr = head;
-  printf("No Expr\t\tOld Value\n");
+  printf(" No Expr\t\tOld Value\n");
   while (ptr != NULL)
   {
-    printf("%3d %-16s 0x%08X",ptr->NO,ptr->name,ptr->old_val);
+    printf("·%3d %-16s 0x%08X\n",ptr->NO,ptr->name,ptr->old_val);
+    ptr = ptr->next;
   }
 }
 
