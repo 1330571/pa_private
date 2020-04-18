@@ -75,6 +75,7 @@ int set_watchpoint(char *e)
   // }
 
   WP *tmp = new_wp();
+  assert(tmp != NULL);
   strcpy(tmp->name, e);
   // if(idx == 66) tmp->old_val = 0;
   // else tmp->old_val = (idx == -1) ? cpu.eip : cpu.gpr[idx]._32;
