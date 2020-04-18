@@ -48,6 +48,7 @@ void free_wp(WP *wp)
     WP *it = head->next, *q = head;
     while (it != wp)
     {
+      printf("continue %p \n",it);
       it = it->next;
       q = q->next;
     }
@@ -79,12 +80,12 @@ int set_watchpoint(char *e)
   printf("old value = %x (%d)\n", tmp->old_val, tmp->old_val);
   
   WP *insert_pos = head;
-  printf("Physical Address %p\n",insert_pos);
+  // printf("Physical Address %p\n",insert_pos);
 
   if(insert_pos == NULL) head = tmp,tmp->next = NULL;
   else{
     while(insert_pos->next != NULL){
-      printf("Physical Address %p\n",insert_pos);
+      // printf("Physical Address %p\n",insert_pos);
       insert_pos = insert_pos->next;
     }
     insert_pos->next = tmp,tmp->next = NULL;
