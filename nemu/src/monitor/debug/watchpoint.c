@@ -127,3 +127,19 @@ void update_value(void){
       ptr->new_val = ptr->old_val;
   }
 }
+
+bool check(void){
+    WP* diff = scan_watchpoint();
+    if(diff != NULL){
+      //hit
+      printf("Hit wachtpoint %d at address %d\n",diff->NO,cpu.eip);
+      printf("expr\t\t= %s\n",diff->name);
+      printf("old value = 0x%08d\n",diff->old_val);
+      printf("new value = 0x%08d\n",diff->new_val);
+      printf("program paused");
+      //set value 
+      update_value();
+      return true;
+    }
+    return false;
+}
