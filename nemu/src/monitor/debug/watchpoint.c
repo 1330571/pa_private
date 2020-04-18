@@ -111,6 +111,7 @@ bool delete_watchpoint(int NO){
       free_wp(ptr);
       return true;
     }
+    ptr = ptr->next;
   }
   printf("NO = %d doesn't exist\n",NO);
   return false;
