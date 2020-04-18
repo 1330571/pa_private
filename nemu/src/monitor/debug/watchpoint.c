@@ -74,7 +74,7 @@ int set_watchpoint(char *e)
   // else tmp->old_val = (idx == -1) ? cpu.eip : cpu.gpr[idx]._32;
   bool success;
   tmp->old_val = expr(e,&success);
-
+  tmp->NO = cnt;
   printf("Set watchpoint #%d\n", cnt++);
   printf("expr\t= %s\n", e);
   printf("old value = %x (%d)\n", tmp->old_val, tmp->old_val);
