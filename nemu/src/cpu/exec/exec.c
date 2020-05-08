@@ -266,10 +266,3 @@ void exec_wrapper(bool print_flag) {
 #endif
 }
 
-make_EHelper(call){
-  //the target address is calculated at the decode stage
-  decoding.is_jmp = 1;
-  rtl_push(eip);
-  rtl_add(&decoding.jmp_eip,eip,&id_dest->val);
-  print_asm("call %x",decoding.jmp_eip);
-}
