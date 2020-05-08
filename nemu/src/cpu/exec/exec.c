@@ -2,9 +2,9 @@
 #include "all-instr.h"
 
 typedef struct {
-  DHelper decode;
-  EHelper execute;
-  int width;
+  DHelper decode; //decode函数指针
+  EHelper execute; //execute函数指针
+  int width; //操作宽度
 } opcode_entry;
 
 #define IDEXW(id, ex, w)   {concat(decode_, id), concat(exec_, ex), w}
@@ -21,11 +21,14 @@ static inline void set_width(int width) {
 }
 
 /* Instruction Decode and EXecute */
+//for exapmle I2r   I立即数 r寄存器
+//every single convertion from X to Y will be decomposed into several steps
+//possible scenario: 从内存中读取、从寄存器中读取
 static inline void idex(vaddr_t *eip, opcode_entry *e) {
   /* eip is pointing to the byte next to opcode */
   if (e->decode)
-    e->decode(eip);
-  e->execute(eip);
+    e->decode(eip); // 解码
+  e->execute(eip); // 执行
 }
 
 static make_EHelper(2byte_esc);
@@ -213,15 +216,20 @@ static make_EHelper(2byte_esc) {
 }
 
 make_EHelper(real) {
-  uint32_t opcode = instr_fetch(eip, 1);
-  decoding.opcode = opcode;
-  set_width(opcode_table[opcode].width);
-  idex(eip, &opcode_table[opcode]);
+  uint32_t opcode = instr_fetch(eip, 1); //取指
+  decoding.opcode = opcode; // 将操作数赋值给decoding结构体
+  set_width(opcode_table[opcode].width); // 取出宽度
+  idex(eip, &opcode_table[opcode]); // 对opcode进行进一步操作和执行
 }
 
 static inline void update_eip(void) {
+  //是否发生了跳转 发生了跳转就进入跳转之后的eip地址,否则的话就进入正常的eip地址.
   cpu.eip = (decoding.is_jmp ? (decoding.is_jmp = 0, decoding.jmp_eip) : decoding.seq_eip);
 }
+
+//赋值eip到decoding的成员,然后decoding作为参数传入exec_real参数中,
+//define make_Ehelper(name) void concat(exec_,name) (vaddr_t* eip)
+//equals to void exec_name(vaddr_t* eip)
 
 void exec_wrapper(bool print_flag) {
 #ifdef DEBUG
@@ -250,7 +258,7 @@ void exec_wrapper(bool print_flag) {
   uint32_t eip = cpu.eip;
 #endif
 
-  update_eip();
+  update_eip(); //对eip指针进行更新 
 
 #ifdef DIFF_TEST
   void difftest_step(uint32_t);

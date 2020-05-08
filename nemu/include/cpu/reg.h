@@ -39,6 +39,7 @@ typedef struct {
     };
   };
   vaddr_t eip; //uint32
+  uint32_t EFLAGS;//PA2.1 Added
 } CPU_state;
 
 extern CPU_state cpu;

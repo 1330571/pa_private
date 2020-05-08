@@ -31,6 +31,11 @@ static inline void rtl_li(rtlreg_t* dest, uint32_t imm) {
     *dest = concat(c_, name) (*src1, imm); \
   }
 
+/*static inline void rtl_name (rtlreg_t* dest,const rtlret_t* 操作数1,const rtlreg_t* 操作数2){
+  *dest = c_name (操作数1,操作数2);
+}
+rtl_name[i] (dest,操作数1,立即数);
+*/
 
 make_rtl_arith_logic(add)
 make_rtl_arith_logic(sub)
@@ -126,11 +131,14 @@ make_rtl_setget_eflags(SF)
 
 static inline void rtl_mv(rtlreg_t* dest, const rtlreg_t *src1) {
   // dest <- src1
-  TODO();
+  // PA2.1 Add
+  *dest = *src1; //直接赋值
 }
 
 static inline void rtl_not(rtlreg_t* dest) {
   // dest <- ~dest
+  // PA2.1 Add 
+  *dest = ~(*dest);
   TODO();
 }
 
@@ -141,14 +149,17 @@ static inline void rtl_sext(rtlreg_t* dest, const rtlreg_t* src1, int width) {
 
 static inline void rtl_push(const rtlreg_t* src1) {
   // esp <- esp - 4
-  // M[esp] <- src1
-  TODO();
+  // M[esp] <- src1 
+  // PA2.1 Add
+  cpu.esp -= 4;
+  rtl_sm(&cpu.esp,4,src1); //写指针,width,操作数指针
 }
 
 static inline void rtl_pop(rtlreg_t* dest) {
   // dest <- M[esp]
   // esp <- esp + 4
-  TODO();
+  rtl_lm(dest,&cpu.esp,4); //读指针,width 
+  cpu.esp += 4;
 }
 
 static inline void rtl_eq0(rtlreg_t* dest, const rtlreg_t* src1) {

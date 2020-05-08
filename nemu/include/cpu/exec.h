@@ -3,7 +3,7 @@
 
 #include "nemu.h"
 
-#define make_EHelper(name) void concat(exec_, name) (vaddr_t *eip)
+#define make_EHelper(name) void concat(exec_, name) (vaddr_t *eip) //定义统一的执行函数
 typedef void (*EHelper) (vaddr_t *);
 
 #include "cpu/decode.h"
@@ -17,7 +17,7 @@ static inline uint32_t instr_fetch(vaddr_t *eip, int len) {
     decoding.p += sprintf(decoding.p, "%02x ", p_instr[i]);
   }
 #endif
-  (*eip) += len;
+  (*eip) += len; // 让eip指针指向新的位置
   return instr;
 }
 

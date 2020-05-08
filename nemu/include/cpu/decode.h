@@ -23,9 +23,9 @@ typedef struct {
 } Operand;
 
 typedef struct {
-  uint32_t opcode;
+  uint32_t opcode; // 操作码
   vaddr_t seq_eip;  // sequential eip
-  bool is_operand_size_16;
+  bool is_operand_size_16;  // 是否出现过宽度前缀
   uint8_t ext_opcode;
   bool is_jmp;
   vaddr_t jmp_eip;
