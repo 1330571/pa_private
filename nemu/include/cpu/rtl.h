@@ -155,9 +155,9 @@ static inline void rtl_push(const rtlreg_t* src1) {
   rtl_sm(&cpu.esp,4,src1); //写指针,width,操作数指针
 }
 
-static inline void rtl_pop(rtlreg_t* dest) {
+static inline void rtl_pop(rtlreg_t* dest) { //PA2.1 add
   // dest <- M[esp]
-  // esp <- esp + 4
+  // esp <- esp + 4 
   rtl_lm(dest,&cpu.esp,4); //读指针,width 
   cpu.esp += 4;
 }

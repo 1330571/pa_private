@@ -7,21 +7,28 @@ rtlreg_t t0, t1, t2, t3;
 const rtlreg_t tzero = 0;
 
 #define make_DopHelper(name) void concat(decode_op_, name) (vaddr_t *eip, Operand *op, bool load_val)
-
+//decoed_op_name (地址,操作符,bool)
 /* Refer to Appendix A in i386 manual for the explanations of these abbreviations */
 
 /* Ib, Iv */
 static inline make_DopHelper(I) {
   /* eip here is pointing to the immediate */
-  op->type = OP_TYPE_IMM;
-  op->imm = instr_fetch(eip, op->width);
-  rtl_li(&op->val, op->imm);
+  op->type = OP_TYPE_IMM;//设置操作数类型为立即数
+  op->imm = instr_fetch(eip, op->width); //取出立即数
+  rtl_li(&op->val, op->imm); //赋值 
 
 #ifdef DEBUG
   snprintf(op->str, OP_STR_SIZE, "$0x%x", op->imm);
 #endif
 }
 
+make_EHelper(call){
+  //the target address is calculated at the decode stage
+  decoding.is_jmp = 1;
+  rtl_push(eip);
+  rtl_add(&decoding.jmp_eip,eip,&id_dest->val);
+  print_asm("call %x",decoding.jmp_eip);
+}
 /* I386 manual does not contain this abbreviation, but it is different from
  * the one above from the view of implementation. So we use another helper
  * function to decode it.
