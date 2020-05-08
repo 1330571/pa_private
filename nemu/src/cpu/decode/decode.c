@@ -22,13 +22,6 @@ static inline make_DopHelper(I) {
 #endif
 }
 
-make_EHelper(call){
-  //the target address is calculated at the decode stage
-  decoding.is_jmp = 1;
-  rtl_push(eip);
-  rtl_add(&decoding.jmp_eip,eip,&id_dest->val);
-  print_asm("call %x",decoding.jmp_eip);
-}
 /* I386 manual does not contain this abbreviation, but it is different from
  * the one above from the view of implementation. So we use another helper
  * function to decode it.
