@@ -6,15 +6,28 @@ make_EHelper(mov) {
   print_asm_template2(mov);
 }
 
+/*
+make_EHelper(movsx) {
+  id_dest->width = decoding.is_operand_size_16 ? 2 : 4;
+  rtl_sext(&t2, &id_src->val, id_src->width);
+  operand_write(id_dest, &t2);
+  print_asm_template2(movsx);
+}
+*/
+
 make_EHelper(push) {
   //PA2.1 Add ,transfer the source  operand to the top of the stack
-  rtl_push(&id_dest->val);
+  rtl_sext(&t0, &id_dest->val,id_dest->width);
+  rtl_push(&t0);
+  operand_write(id_dest,&t0);
   print_asm_template1(push);
 }
 
 make_EHelper(pop) {
-  TODO();
-
+  //PA2.1 Add 
+  rtl_sext(&t0,&id_dest->val,id_dest->width);
+  rtl_pop(&t0); 
+  operand_write(id_dest,&t0);
   print_asm_template1(pop);
 }
 

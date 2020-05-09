@@ -41,11 +41,13 @@ static make_EHelper(2byte_esc);
 static make_EHelper(name) { \
   idex(eip, &concat(opcode_table_, name)[decoding.ext_opcode]); \
 }
-
-/* 0x80, 0x81, 0x83 */
+//make_group(name ,0,1,2,3,4,5,6,7,7)
+//static opcode_entry opcode_table_gp[] = {1,2,3,4,5,6,7,8func pointer}
+//group 101 sub
+/* 0x80, 0x81, 0x83 */  
 make_group(gp1,
     EMPTY, EMPTY, EMPTY, EMPTY,
-    EMPTY, EMPTY, EMPTY, EMPTY)
+    EMPTY, EX(sub), EMPTY, EMPTY)
 
   /* 0xc0, 0xc1, 0xd0, 0xd1, 0xd2, 0xd3 */
 make_group(gp2,

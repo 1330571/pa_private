@@ -122,10 +122,10 @@ static inline void rtl_sr(int r, int width, const rtlreg_t* src1) {
 
 #define make_rtl_setget_eflags(f) \
   static inline void concat(rtl_set_, f) (const rtlreg_t* src) { \
-    TODO(); \
+    cpu.eflags.f = *src; \
   } \
   static inline void concat(rtl_get_, f) (rtlreg_t* dest) { \
-    TODO(); \
+    *dest = cpu.eflags.f; \
   }
 
 make_rtl_setget_eflags(CF)
@@ -143,57 +143,70 @@ static inline void rtl_not(rtlreg_t* dest) {
   // dest <- ~dest
   // PA2.1 Add 
   *dest = ~(*dest);
-  TODO();
+
 }
 
 static inline void rtl_sext(rtlreg_t* dest, const rtlreg_t* src1, int width) {
   // dest <- signext(src1[(width * 8 - 1) .. 0])
-  TODO();
+  // PA2,1 Add 符号扩展
+  // positive number 加0
+  // negative number 加1
+  int32_t tmpValue = (int32_t) *src1;
+  int32_t extraBit = 32 - 8 * width;
+  *dest = ((tmpValue << extraBit) >> extraBit);
 }
 
 static inline void rtl_push(const rtlreg_t* src1) {
   // esp <- esp - 4
   // M[esp] <- src1 
   // PA2.1 Add
-  cpu.esp -= 4;
-  rtl_sm(&cpu.esp,4,src1); //写指针,width,操作数指针
+  rtl_lr_l(&t0,R_ESP);
+  rtl_subi(&t0,&t0,4);
+  rtl_sr_l(R_ESP,&t0); 
+  rtl_sm(&t0,4,src1); //写指针,width,操作数指针
 }
 
 static inline void rtl_pop(rtlreg_t* dest) { //PA2.1 add
   // dest <- M[esp]
   // esp <- esp + 4 
-  rtl_lm(dest,&cpu.esp,4); //读指针,width 
-  cpu.esp += 4;
+  rtl_lr_l(&t0,R_ESP);
+  rtl_lm(dest,&t0,4); //读指针,width 
+  rtl_addi(&t0,&t0,4);
+  rtl_sr_l(R_ESP,&t0);
 }
 
 static inline void rtl_eq0(rtlreg_t* dest, const rtlreg_t* src1) {
   // dest <- (src1 == 0 ? 1 : 0)
-  TODO();
+  *dest = (*src1 == 0 ? 1 : 0);
 }
 
 static inline void rtl_eqi(rtlreg_t* dest, const rtlreg_t* src1, int imm) {
   // dest <- (src1 == imm ? 1 : 0)
-  TODO();
+  *dest = (*src1 == imm ? 1 : 0);
 }
 
 static inline void rtl_neq0(rtlreg_t* dest, const rtlreg_t* src1) {
   // dest <- (src1 != 0 ? 1 : 0)
-  TODO();
+  *dest = (*src1 != 0 ? 1 : 0);
 }
 
 static inline void rtl_msb(rtlreg_t* dest, const rtlreg_t* src1, int width) {
   // dest <- src1[width * 8 - 1]
-  TODO();
+  *dest = ((*src1) >> (8 * width - 1)) & 0x1;
 }
 
 static inline void rtl_update_ZF(const rtlreg_t* result, int width) {
   // eflags.ZF <- is_zero(result[width * 8 - 1 .. 0])
-  TODO();
+  //PA2.1 Add 是否是0? 
+  t0 = (*result == 0);
+  rtl_set_ZF(&t0);
 }
 
 static inline void rtl_update_SF(const rtlreg_t* result, int width) {
   // eflags.SF <- is_sign(result[width * 8 - 1 .. 0])
-  TODO();
+  //PA2.1 Add 是什么符号?
+  t0 =  ((*result) >> (8 * width - 1)) & 0x1;
+  rtl_set_SF(&t0); 
 }
 
 static inline void rtl_update_ZFSF(const rtlreg_t* result, int width) {
