@@ -25,8 +25,8 @@ make_EHelper(push) {
 
 make_EHelper(pop) {
   //PA2.1 Add
-  rtl_pop(&t0); 
-  // operand_write(id_dest,&t0);
+  rtl_pop(&t0);
+  operand_write(id_dest,&t0);
   print_asm_template1(pop);
 }
 
