@@ -1,6 +1,10 @@
 #ifndef __RTL_H__
 #define __RTL_H__
-
+//RTL寄存器
+//通用寄存器
+//id_src id_src2 id_test 
+//t0 ~ t3
+//tzero
 #include "nemu.h"
 
 extern rtlreg_t t0, t1, t2, t3;

@@ -68,8 +68,8 @@ static inline make_DopHelper(a) {
  * eXX: eAX, eCX, eDX, eBX, eSP, eBP, eSI, eDI
  */
 static inline make_DopHelper(r) {
-  op->type = OP_TYPE_REG;
-  op->reg = decoding.opcode & 0x7;
+  op->type = OP_TYPE_REG; //寄存器类型
+  op->reg = decoding.opcode & 0x7; //获取是哪个cpu
   if (load_val) {
     rtl_lr(&op->val, op->reg, op->width);
   }
