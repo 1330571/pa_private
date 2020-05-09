@@ -38,7 +38,7 @@ static inline make_DopHelper(SI) {
    *
    op->simm = ???
    */
-  TODO();
+  //PA 2.1 Add
 
   rtl_li(&op->val, op->simm);
 
