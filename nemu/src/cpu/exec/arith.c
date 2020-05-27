@@ -71,7 +71,14 @@ make_EHelper(cmp) {
 }
 
 make_EHelper(inc) {
-  TODO();
+  rtlreg_t tmp;
+  rtl_addi(&tmp,&id_dest->val,1);
+  operand_write(id_dest,&tmp);
+  
+  rtl_update_ZFSF(&tmp,id_dest->width);
+  rtl_xor(&tmp,&id_dest->val,&tmp); //xor运算
+  rtl_msb(&tmp,&tmp,id_dest->width); //取出xor后的符号位
+  rtl_set_OF(&t2); //根据符号位决定是否溢出
 
   print_asm_template1(inc);
 }
