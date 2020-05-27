@@ -36,18 +36,19 @@ make_EHelper(sub) {
 
 make_EHelper(cmp) {
   //LeftSRC - signExtnd(RightSrc)
-  rtl_sub(&t2, &id_dest->val, &id_src->val); //dest - val 步骤
-  rtl_sltu(&t3, &id_dest->val, &t2); 
-  // operand_write(id_dest, &t2);
+  rtlreg_t copyValue = id_dest->val;
+  rtlreg_t copyValue2 = id_src->val;
+  rtl_sub(&t2, &copyValue, &copyValue2); //dest - val 步骤
+  rtl_sltu(&t3, &copyValue, &t2); 
 
   rtl_update_ZFSF(&t2, id_dest->width); //ZF、SF　　　
 
-  rtl_sltu(&t0, &id_dest->val, &t2);
+  rtl_sltu(&t0, &copyValue, &t2);
   rtl_or(&t0, &t3, &t0);
   rtl_set_CF(&t0);
 
-  rtl_xor(&t0, &id_dest->val, &id_src->val);
-  rtl_xor(&t1, &id_dest->val, &t2);
+  rtl_xor(&t0, &copyValue, &copyValue2);
+  rtl_xor(&t1, &copyValue, &t2);
   rtl_and(&t0, &t0, &t1);
   rtl_msb(&t0, &t0, id_dest->width);
   rtl_set_OF(&t0);
