@@ -39,8 +39,8 @@ make_EHelper(cmp) {
   rtlreg_t tmpV = id_dest->val;
   rtl_sub(&t2, &id_dest->val, &id_src->val); //dest - val 步骤
   rtl_sltu(&t3, &id_dest->val, &t2); 
-  operand_write(id_dest, &t2);
-
+  // operand_write(id_dest, &t2);
+  
   rtl_update_ZFSF(&t2, id_dest->width); //ZF、SF　　　
 
   rtl_sltu(&t0, &id_dest->val, &t2);
@@ -53,8 +53,6 @@ make_EHelper(cmp) {
   rtl_msb(&t0, &t0, id_dest->width);
   rtl_set_OF(&t0);
 
-  rtl_li(&id_dest->val,tmpV);
-  
   print_asm_template2(cmp);
 }
 
