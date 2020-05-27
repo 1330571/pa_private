@@ -1,7 +1,6 @@
 #include "cpu/exec.h"
 
 make_EHelper(add) {
-  rtlreg_t tmpAddValue;
   rtl_add(&t2,&id_dest->val,&id_src->val);
   rtl_sltu(&t3, &id_dest->val, &t2); 
   operand_write(id_dest, &t2);
