@@ -15,3 +15,6 @@ make_EHelper(ret);
 make_EHelper(and);
 make_EHelper(lea);
 make_EHelper(dec);
+make_EHelper(imul1);
+make_EHelper(imul2);
+make_EHelper(imul3);
