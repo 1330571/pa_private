@@ -36,11 +36,10 @@ make_EHelper(sub) {
 
 make_EHelper(cmp) {
   //LeftSRC - signExtnd(RightSrc)
-  rtlreg_t tmpV = id_dest->val;
   rtl_sub(&t2, &id_dest->val, &id_src->val); //dest - val 步骤
   rtl_sltu(&t3, &id_dest->val, &t2); 
   // operand_write(id_dest, &t2);
-  
+
   rtl_update_ZFSF(&t2, id_dest->width); //ZF、SF　　　
 
   rtl_sltu(&t0, &id_dest->val, &t2);
