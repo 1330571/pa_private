@@ -41,6 +41,7 @@ static inline make_DopHelper(SI) {
   //PA 2.1 Add 2.2 Modified
   rtlreg_t tmpValue = instr_fetch(eip, op->width);
   rtl_sext(&tmpValue,&tmpValue,op->width);
+  op->simm = tmpValue;
   rtl_li(&op->val, op->simm);
 
 #ifdef DEBUG
