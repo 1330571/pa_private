@@ -13,10 +13,10 @@ CF <- 0
 OF <- 0
 PA2.2 Add 
 */
-  int res;
+  rtlreg_t res;
   rtl_and(&res,&id_dest->val,&id_src->val);
   operand_write(id_dest,&res);
-  int zeroValue = 0;
+  rtlreg_t zeroValue = 0;
   rtl_set_CF(&zeroValue);
   rtl_set_ZF(&zeroValue);
   rtl_update_ZFSF(&id_dest->val,id_dest->width);
