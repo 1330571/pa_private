@@ -1,8 +1,15 @@
 #include "cpu/exec.h"
 
 make_EHelper(test) {
-  TODO();
-
+  //LeftSrc AND RightSrc
+  //CF <- 0
+  //OF <- 0
+  rtlreg_t tmpValue;
+  rtl_and(&tmpValue,&id_dest->val,&id_src->val);
+  t0 = 0;
+  rtl_set_OF(&t1);
+  rtl_set_CF(&t1);
+  rtl_update_ZFSF(&tmpValue,id_dest->width);
   print_asm_template2(test);
 }
 
