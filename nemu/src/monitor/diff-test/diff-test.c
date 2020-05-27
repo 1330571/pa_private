@@ -160,15 +160,15 @@ void difftest_step(uint32_t eip) {
   if(r.ebp != cpu.ebp) diff=true;
   if (diff) {
 
-    printf("eip r=%x cpu=%x\n",r.eip,cpu.eip);
-    printf("eax r=%x cpu=%x\n",r.eax,cpu.eax);
-    printf("ebx r=%x cpu=%x\n",r.ebx,cpu.ebx);
-    printf("ecx r=%x cpu=%x\n",r.ecx,cpu.ecx);
-    printf("edx r=%x cpu=%x\n",r.edx,cpu.edx);
-    printf("esp r=%x cpu=%x\n",r.esp,cpu.esp);
-    printf("edi r=%x cpu=%x\n",r.edi,cpu.edi);
-    printf("esi r=%x cpu=%x\n",r.esi,cpu.esi);
-    printf("ebp r=%x cpu=%x\n",r.ebp,cpu.ebp);
+    printf("eip r=%-10x cpu=%-10x\n",r.eip,cpu.eip);
+    printf("eax r=%-10x cpu=%-10x\n",r.eax,cpu.eax);
+    printf("ebx r=%-10x cpu=%-10x\n",r.ebx,cpu.ebx);
+    printf("ecx r=%-10x cpu=%-10x\n",r.ecx,cpu.ecx);
+    printf("edx r=%-10x cpu=%-10x\n",r.edx,cpu.edx);
+    printf("esp r=%-10x cpu=%-10x\n",r.esp,cpu.esp);
+    printf("edi r=%-10x cpu=%-10x\n",r.edi,cpu.edi);
+    printf("esi r=%-10x cpu=%-10x\n",r.esi,cpu.esi);
+    printf("ebp r=%-10x cpu=%-10x\n",r.ebp,cpu.ebp);
 
     nemu_state = NEMU_END;
   }
