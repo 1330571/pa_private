@@ -21,3 +21,4 @@ make_EHelper(imul2);
 make_EHelper(imul3);
 make_EHelper(cmp);
 make_EHelper(jcc);
+make_EHelper(add);
