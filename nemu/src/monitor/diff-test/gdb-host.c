@@ -47,7 +47,7 @@ bool gdb_memcpy_to_qemu(uint32_t dest, void *src, int len) {
   return ok;
 }
 
-bool gdb_getregs(union gdb_regs *r) {
+bool cgdb_getregs(union gdb_regs *r) {
   gdb_send(conn, (const uint8_t *)"g", 1);
   size_t size;
   uint8_t *reply = gdb_recv(conn, &size);
