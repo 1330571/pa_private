@@ -30,4 +30,8 @@ make_EHelper(inc);
 make_EHelper(or);
 make_EHelper(adc);
 make_EHelper(xor);
-
+make_EHelper(shr);
+make_EHelper(shl);
+make_EHelper(sar);
+make_EHelper(not);
+make_EHelper(sbb);
