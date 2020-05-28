@@ -50,23 +50,43 @@ make_EHelper(leave) {
   print_asm("leave");
 }
 
-make_EHelper(cltd) {
+make_EHelper(cltd) { //from baidu: 扩展位数
+  rtlreg_t tmp;
   if (decoding.is_operand_size_16) {
-    TODO();
+    rtl_lr_w(&tmp, R_AX); // Load AX
+    rtl_msb(&t3,&tmp,1);
+    if(t3 == 0)
+      rtl_sr_w(R_DX,t3); 
+    else {
+      rtlreg_t x = 0xffff;
+      rtl_sr_w(R_DX,x);
+    }
   }
   else {
-    TODO();
+    rtl_lr_l(&tmp,R_EAX); // Load EAX
+    rtl_msb(&t3,&tmp,2);
+    if(t3 = 0)
+      rtl_sr_l(R_EDX,&t3);
+    else{
+      rtlreg_t x = 0xffffffff;
+      rtl_sr_l(R_EDX) = t3;
+    }
   }
 
   print_asm(decoding.is_operand_size_16 ? "cwtl" : "cltd");
 }
 
-make_EHelper(cwtl) {
+make_EHelper(cwtl) { //from baidu:有符号数。高16位还需要额外处理
+  rtlreg_t tmp;
   if (decoding.is_operand_size_16) {
-    TODO();
+    rtl_lr_b(&tmp,R_AL);
+    rtl_sext(&t3,&tmp,1);
+    rtl_sr_w(R_AX,&t3);
   }
   else {
-    TODO();
+    rtl_lr_w(&tmp,R_AX);
+    rtl_sext(&t3,&tmp,2);
+    rtl_sr_l(R_EAX,&t3);
   }
 
   print_asm(decoding.is_operand_size_16 ? "cbtw" : "cwtl");
