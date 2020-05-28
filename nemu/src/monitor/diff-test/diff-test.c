@@ -170,6 +170,7 @@ void difftest_step(uint32_t eip) {
     printf("esi r=%-10x cpu=%-10x\n",r.esi,cpu.esi);
     printf("ebp r=%-10x cpu=%-10x\n",r.ebp,cpu.ebp);
 
+    printf("EFLAGS = \n%d\n%d",r.eflags,cpu.eflags);
     nemu_state = NEMU_END;
   }
 }
