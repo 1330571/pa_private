@@ -25,11 +25,11 @@ PA2.2 Add
   rtlreg_t res;
   rtl_and(&res,&id_dest->val,&id_src->val);
   operand_write(id_dest,&res);
-  
+
   rtlreg_t zeroValue = 0;
   rtl_set_CF(&zeroValue);
   rtl_set_OF(&zeroValue);
-  rtl_update_ZFSF(&res,id_dest->width);
+  rtl_update_ZFSF(&id_dest->val,id_dest->width);
   print_asm_template2(and);
 }
 
