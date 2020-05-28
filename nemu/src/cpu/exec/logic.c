@@ -48,8 +48,6 @@ make_EHelper(or) {
   rtl_set_CF(&zeroValue);
   rtl_set_ZF(&zeroValue);
   rtl_update_ZFSF(&id_dest->val,id_dest->width);
-  print_asm_template2(and); 
-
   print_asm_template2(or);
 }
 

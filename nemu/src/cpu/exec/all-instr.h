@@ -27,3 +27,5 @@ make_EHelper(setcc);
 make_EHelper(movzx);
 make_EHelper(test);
 make_EHelper(inc);
+make_EHelper(or);
+make_EHelper(adc);
