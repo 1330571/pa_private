@@ -29,6 +29,8 @@ PA2.2 Add
   rtlreg_t zeroValue = 0;
   rtl_set_CF(&zeroValue);
   rtl_set_OF(&zeroValue);
+
+  printf("到第一样不一样嘛！ %d %d\n",id_dest->val,res);
   rtl_update_ZFSF(&id_dest->val,id_dest->width);
   print_asm_template2(and);
 }
