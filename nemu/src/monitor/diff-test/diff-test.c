@@ -170,7 +170,26 @@ void difftest_step(uint32_t eip) {
     printf("esi r=%-10x cpu=%-10x\n",r.esi,cpu.esi);
     printf("ebp r=%-10x cpu=%-10x\n",r.ebp,cpu.ebp);
 
-    printf("EFLAGS = \n %x \n %x \n",r.eflags,cpu.eflags.v);
+    printf("ZF SF OF CF: %d %d %d %d\n",cpu.eflags.ZF,cpu.eflags.SF,cpu.eflags.OF,cpu.eflags.CF);
+
+  union{
+    struct{
+      uint32_t CF:1;
+      unsigned :5;
+      uint32_t ZF:1;
+      uint32_t SF:1;
+      unsigned :1;
+      uint32_t IF:1;
+      unsigned : 1;
+      uint32_t OF:1;
+      unsigned : 20;
+    };
+    uint32_t v;
+  }eflags2;
+
+    eflags2 = r.eflags;
+    printf("ZF SF OF CF: %d %d %d %d\n",eflags2.ZF,eflags2.SF,eflags2.OF,eflags2.CF);
+
     nemu_state = NEMU_END;
   }
 }
