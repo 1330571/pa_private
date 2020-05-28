@@ -55,7 +55,7 @@ make_EHelper(cltd) { //from baidu: 扩展位数
   if (decoding.is_operand_size_16) {
     rtl_lr_w(&tmp, R_AX); // Load AX
 
-    if((int8_t)tmp < 0)
+    if((int16_t)tmp < 0)
       reg_w(R_DX) = 0xffff;
     else 
       reg_w(R_DX) = 0;
@@ -63,7 +63,7 @@ make_EHelper(cltd) { //from baidu: 扩展位数
   else {
     rtl_lr_l(&tmp,R_EAX); // Load EAX
     
-    if((int16_t)tmp < 0)
+    if((int32_t)tmp < 0)
       reg_l(R_EDX) = 0xffffffff;
     else
       reg_l(R_EDX) = 0;
