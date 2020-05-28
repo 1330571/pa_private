@@ -38,7 +38,7 @@ void rtl_setcc(rtlreg_t* dest, uint8_t subcode) {
       rtl_get_OF(&t1);
       rtl_xor(dest,&t1,&t0);
       break;
-    case CC_LE: //ZF = 1  & SF != OF
+    case CC_LE: //ZF = 1 or SF != OF
       rtl_get_ZF(&t0);
       rtl_get_SF(&t1);
       rtl_get_OF(&t4);
