@@ -8,7 +8,7 @@ make_EHelper(add) {
   operand_write(id_dest,&T2); //写结果
 
   rtl_update_ZFSF(&T2,id_dest->width); //ZF、SF操作数更改
-  
+
   rtl_sltu(&T0,&T2,&id_dest->val); //t0 = tmpValue < op2
   rtl_or(&T0,&T3,&T0);
   rtl_set_CF(&T0);
@@ -109,12 +109,13 @@ make_EHelper(neg) {
 
 make_EHelper(adc) {
   rtl_add(&t2, &id_dest->val, &id_src->val);
-  rtl_sltu(&t3, &t2, &id_dest->val);
   rtl_get_CF(&t1);
   rtl_add(&t2, &t2, &t1);
+  
+  rtl_sltu(&t3, &t2, &id_dest->val);
   operand_write(id_dest, &t2);
 
-  rtl_update_ZFSF(&t2, id_dest->width);
+  rtl_update_ZFSF(&t2, id_dest->width); //I think here is ok
 
   rtl_sltu(&t0, &t2, &id_dest->val);
   rtl_or(&t0, &t3, &t0);
