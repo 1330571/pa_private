@@ -158,20 +158,6 @@ void difftest_step(uint32_t eip) {
   if(r.edi != cpu.edi) diff=true;
   if(r.esi != cpu.esi) diff=true;
   if(r.ebp != cpu.ebp) diff=true;
-  if (diff) {
-
-    printf("eip r=%-10x cpu=%-10x\n",r.eip,cpu.eip);
-    printf("eax r=%-10x cpu=%-10x\n",r.eax,cpu.eax);
-    printf("ebx r=%-10x cpu=%-10x\n",r.ebx,cpu.ebx);
-    printf("ecx r=%-10x cpu=%-10x\n",r.ecx,cpu.ecx);
-    printf("edx r=%-10x cpu=%-10x\n",r.edx,cpu.edx);
-    printf("esp r=%-10x cpu=%-10x\n",r.esp,cpu.esp);
-    printf("edi r=%-10x cpu=%-10x\n",r.edi,cpu.edi);
-    printf("esi r=%-10x cpu=%-10x\n",r.esi,cpu.esi);
-    printf("ebp r=%-10x cpu=%-10x\n",r.ebp,cpu.ebp);
-
-    printf("ZF SF OF CF: %d %d %d %d\n",cpu.eflags.ZF,cpu.eflags.SF,cpu.eflags.OF,cpu.eflags.CF);
-
   union{
     struct{
       uint32_t CF:1;
@@ -187,7 +173,25 @@ void difftest_step(uint32_t eip) {
     uint32_t v;
   }eflags2;
 
-    eflags2.v = r.eflags;
+  eflags2.v = r.eflags;
+  if(eflags2.ZF != cpu.eflags.ZF) diff = true;
+  if(eflags2.SF != cpu.eflags.SF) diff = true;
+  if(eflags2.OF != cpu.eflags.OF) diff = true;
+  if(eflags2.CF != cpu.eflags.CF) diff = true;
+  if (diff) {
+
+    printf("eip r=%-10x cpu=%-10x\n",r.eip,cpu.eip);
+    printf("eax r=%-10x cpu=%-10x\n",r.eax,cpu.eax);
+    printf("ebx r=%-10x cpu=%-10x\n",r.ebx,cpu.ebx);
+    printf("ecx r=%-10x cpu=%-10x\n",r.ecx,cpu.ecx);
+    printf("edx r=%-10x cpu=%-10x\n",r.edx,cpu.edx);
+    printf("esp r=%-10x cpu=%-10x\n",r.esp,cpu.esp);
+    printf("edi r=%-10x cpu=%-10x\n",r.edi,cpu.edi);
+    printf("esi r=%-10x cpu=%-10x\n",r.esi,cpu.esi);
+    printf("ebp r=%-10x cpu=%-10x\n",r.ebp,cpu.ebp);
+    
+    printf("ZF SF OF CF: %d %d %d %d\n",cpu.eflags.ZF,cpu.eflags.SF,cpu.eflags.OF,cpu.eflags.CF);
+
     printf("ZF SF OF CF: %d %d %d %d\n",eflags2.ZF,eflags2.SF,eflags2.OF,eflags2.CF);
 
     nemu_state = NEMU_END;
