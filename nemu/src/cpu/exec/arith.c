@@ -1,20 +1,21 @@
 #include "cpu/exec.h"
 
 make_EHelper(add) {
-  rtl_add(&t2,&id_dest->val,&id_src->val);
-  rtl_sltu(&t3, &id_dest->val, &t2); 
-  operand_write(id_dest, &t2);
+  rtlreg_t tmpValue;
+  rtl_add(&tmpValue,&id_dest->val,&id_src->val);
+  rtl_sltu(&t3,&tmpValue,&id_dest->val);
 
-  rtl_update_ZFSF(&t2, id_dest->width); //ZF、SF　　　
+  operand_write(id_dest,&tmpValue); //写结果
+  rtl_update_ZFSF(&tmpValue,id_dest->val); //ZF、SF操作数更改
+  rtl_sltu(&t0,&tmpValue,&id_dest->val);
+  rtl_or(&t0,&t3,&t0);
 
-  rtl_sltu(&t0, &id_dest->val, &t2);
-  rtl_or(&t0, &t3, &t0);
-  rtl_set_CF(&t0);
-
-  rtl_xor(&t0, &id_dest->val, &id_src->val);
-  rtl_xor(&t1, &id_dest->val, &t2);
-  rtl_and(&t0, &t0, &t1);
-  rtl_msb(&t0, &t0, id_dest->width);
+  //是否OF 决定于符号位是否变化
+  rtl_xor(&t0,&id_dest->val,&id_src->val); 
+  rtl_not(&t0);
+  rtl_xor(&t1,&id_dest->val,&tmpValue);
+  rtl_and(&t0,&t0,&t1);
+  rtl_msb(&t0,&t0,id_dest->width);
   rtl_set_OF(&t0);
 
   print_asm_template2(add);
