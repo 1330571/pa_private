@@ -37,3 +37,7 @@ make_EHelper(not);
 make_EHelper(sbb);
 make_EHelper(jmp_rm);
 make_EHelper(call_rm);
+make_EHelper(div);
+make_EHelper(rol);
+make_EHelper(idiv);
+make_EHelper(neg);
