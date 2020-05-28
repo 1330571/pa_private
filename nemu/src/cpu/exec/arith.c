@@ -8,7 +8,7 @@ make_EHelper(add) {
   operand_write(id_dest,&T2); //写结果
 
   rtl_update_ZFSF(&T2,id_dest->width); //ZF、SF操作数更改
-
+  
   rtl_sltu(&T0,&T2,&id_dest->val); //t0 = tmpValue < op2
   rtl_or(&T0,&T3,&T0);
   rtl_set_CF(&T0);
@@ -108,25 +108,27 @@ make_EHelper(neg) {
 }
 
 make_EHelper(adc) {
-  rtl_add(&t2, &id_dest->val, &id_src->val);
-  rtl_get_CF(&t1);
-  rtl_add(&t2, &t2, &t1);
-  
-  rtl_sltu(&t3, &t2, &id_dest->val);
-  operand_write(id_dest, &t2);
 
-  rtl_update_ZFSF(&t2, id_dest->width); //I think here is ok
+  rtlreg_t T0,T1,T2,T3;
 
-  rtl_sltu(&t0, &t2, &id_dest->val);
-  rtl_or(&t0, &t3, &t0);
-  rtl_set_CF(&t0);
+  rtl_add(&T2, &id_dest->val, &id_src->val);
+  rtl_sltu(&T3, &T2, &id_dest->val);
+  rtl_get_CF(&T1);
+  rtl_add(&T2, &T2, &T1);
+  operand_write(id_dest, &T2);
 
-  rtl_xor(&t0, &id_dest->val, &id_src->val);
-  rtl_not(&t0);
-  rtl_xor(&t1, &id_dest->val, &t2);
-  rtl_and(&t0, &t0, &t1);
-  rtl_msb(&t0, &t0, id_dest->width);
-  rtl_set_OF(&t0);
+  rtl_update_ZFSF(&T2, id_dest->width);
+
+  rtl_sltu(&T0, &T2, &id_dest->val);
+  rtl_or(&T0, &T3, &T0);
+  rtl_set_CF(&T0);
+
+  rtl_xor(&T0, &id_dest->val, &id_src->val);
+  rtl_not(&T0);
+  rtl_xor(&T1, &id_dest->val, &T2);
+  rtl_and(&T0, &T0, &T1);
+  rtl_msb(&T0, &T0, id_dest->width);
+  rtl_set_OF(&T0);
 
   print_asm_template2(adc);
 }
