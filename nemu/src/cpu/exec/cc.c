@@ -14,6 +14,7 @@ void rtl_setcc(rtlreg_t* dest, uint8_t subcode) {
 
   // TODO: Query EFLAGS to determine whether the condition code is satisfied.
   // dest <- ( cc is satisfied ? 1 : 0)
+  rtlreg_t t4;
   switch (subcode & 0xe) { // & 1110 去掉最后1位的奇偶情况
     case CC_O:
       rtl_get_OF(dest);
@@ -38,7 +39,6 @@ void rtl_setcc(rtlreg_t* dest, uint8_t subcode) {
       rtl_xor(dest,&t1,&t0);
       break;
     case CC_LE: //ZF = 1  & SF != OF
-      rtlreg_t t4;
       rtl_get_ZF(&t0);
       rtl_get_SF(&t1);
       rtl_get_OF(&t4);
