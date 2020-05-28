@@ -3,11 +3,11 @@
 make_EHelper(add) {
   rtlreg_t tmpValue;
   rtl_add(&tmpValue,&id_dest->val,&id_src->val);
-  rtl_sltu(&t3,&tmpValue,&id_dest->val);
-
-  operand_write(id_dest,&tmpValue); //写结果
   rtl_update_ZFSF(&tmpValue,id_dest->val); //ZF、SF操作数更改
-  rtl_sltu(&t0,&tmpValue,&id_dest->val);
+
+  rtl_sltu(&t3,&tmpValue,&id_dest->val); //t3 = tmpValue < op1
+  operand_write(id_dest,&tmpValue); //写结果
+  rtl_sltu(&t0,&tmpValue,&id_dest->val); //t0 = tmpValue < op2
   rtl_or(&t0,&t3,&t0);
 
   //是否OF 决定于符号位是否变化
@@ -77,8 +77,8 @@ make_EHelper(inc) {
   operand_write(id_dest,&tmp);
   
   rtl_update_ZFSF(&tmp,id_dest->width);
-  rtl_xor(&tmp,&id_dest->val,&tmp); //xor运算
-  rtl_msb(&tmp,&tmp,id_dest->width); //取出xor后的符号位
+  rtl_xor(&t2,&id_dest->val,&tmp); //xor运算
+  rtl_msb(&t2,&2,id_dest->width); //取出xor后的符号位
   rtl_set_OF(&t2); //根据符号位决定是否溢出
 
   print_asm_template1(inc);
