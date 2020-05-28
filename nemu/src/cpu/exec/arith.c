@@ -2,11 +2,13 @@
 
 make_EHelper(add) {
   rtlreg_t T2,T3,T0,T1;
+
   rtl_add(&T2,&id_dest->val,&id_src->val);
   rtl_sltu(&T3,&T2,&id_dest->val); //t3 = tmpValue < op1
   operand_write(id_dest,&T2); //写结果
 
-  rtl_update_ZFSF(&T2,id_dest->val); //ZF、SF操作数更改
+  rtl_update_ZFSF(&T2,id_dest->width); //ZF、SF操作数更改
+  
   rtl_sltu(&T0,&T2,&id_dest->val); //t0 = tmpValue < op2
   rtl_or(&T0,&T3,&T0);
   rtl_set_CF(&T0);
