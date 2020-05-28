@@ -41,3 +41,4 @@ make_EHelper(div);
 make_EHelper(rol);
 make_EHelper(idiv);
 make_EHelper(neg);
+make_EHelper(mul);
