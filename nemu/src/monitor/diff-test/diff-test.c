@@ -187,7 +187,7 @@ void difftest_step(uint32_t eip) {
     uint32_t v;
   }eflags2;
 
-    eflags2 = r.eflags;
+    eflags2.v = r.eflags;
     printf("ZF SF OF CF: %d %d %d %d\n",eflags2.ZF,eflags2.SF,eflags2.OF,eflags2.CF);
 
     nemu_state = NEMU_END;
