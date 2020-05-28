@@ -198,15 +198,15 @@ static inline void rtl_msb(rtlreg_t* dest, const rtlreg_t* src1, int width) {
 static inline void rtl_update_ZF(const rtlreg_t* result, int width) {
   // eflags.ZF <- is_zero(result[width * 8 - 1 .. 0])
   //PA2.1 Add 是否是0? 
-  t0 = (*result == 0);
-  rtl_set_ZF(&t0);
+  rtlreg_t tmp = (*result == 0);
+  rtl_set_ZF(&tmp);
 }
 
 static inline void rtl_update_SF(const rtlreg_t* result, int width) {
   // eflags.SF <- is_sign(result[width * 8 - 1 .. 0])
   //PA2.1 Add 是什么符号?
-  t0 =  ((*result) >> (8 * width - 1)) & 0x1;
-  rtl_set_SF(&t0); 
+  rtlreg_t tmp =  ((*result) >> (8 * width - 1)) & 0x1;
+  rtl_set_SF(&tmp); 
 }
 
 static inline void rtl_update_ZFSF(const rtlreg_t* result, int width) {
