@@ -112,9 +112,9 @@ make_EHelper(adc) {
   rtlreg_t T0,T1,T2,T3;
 
   rtl_add(&T2, &id_dest->val, &id_src->val);
-  rtl_sltu(&T3, &T2, &id_dest->val);
   rtl_get_CF(&T1);
   rtl_add(&T2, &T2, &T1);
+  rtl_sltu(&T3, &T2, &id_dest->val);
   operand_write(id_dest, &T2);
 
   rtl_update_ZFSF(&T2, id_dest->width);
