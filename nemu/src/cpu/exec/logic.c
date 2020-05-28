@@ -33,9 +33,9 @@ PA2.2 Add
 make_EHelper(xor) {
   rtl_xor(&t3,&id_dest->val,&id_src->val);
   operand_write(id_dest,&t3);
-  t0 = 0;
-  rtl_set_CF(&t0);
-  rtl_set_OF(&t0);
+  t2 = 0;
+  rtl_set_CF(&t2);
+  rtl_set_OF(&t2);
   rtl_update_ZFSF(&id_dest->val,id_dest->width);
   print_asm_template2(xor);
 }
