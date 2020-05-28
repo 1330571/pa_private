@@ -29,3 +29,4 @@ make_EHelper(test);
 make_EHelper(inc);
 make_EHelper(or);
 make_EHelper(adc);
+make_EHelper(xor)
