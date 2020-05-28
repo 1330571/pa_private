@@ -40,7 +40,11 @@ make_EHelper(ret) {
 }
 
 make_EHelper(call_rm) {
-  TODO();
-
+  // `Push(EIP);`
+// `EIP ← [r/m32];`
+  t3 = decoding.seq_eip;
+  rtl_push(&t3); //PUSH 过程
+  decoding.is_jmp = 1;
+  decoding.jmp_eip = id_dest->val; //EIP赋值过程
   print_asm("call *%s", id_dest->str);
 }
