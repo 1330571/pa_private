@@ -57,22 +57,16 @@ make_EHelper(cltd) { //from baidu: 扩展位数
   rtlreg_t zero = 0x0;
   if (decoding.is_operand_size_16) {
     rtl_lr_w(&tmp, R_AX); // Load AX
-
     if((int16_t)tmp < 0)
-      // reg_w(R_DX) = 0xffff;
       rtl_sr_w(R_DX,&F4);
     else 
-      // reg_w(R_DX) = 0;
       rtl_sr_w(R_DX,&zero);
   }
   else {
     rtl_lr_l(&tmp,R_EAX); // Load EAX
-    
     if((int32_t)tmp < 0)
-      // reg_l(R_EDX) = 0xffffffff;
       rtl_sr_l(R_EDX,&F8);
     else
-      // reg_l(R_EDX) = 0;
       rtl_sr_l(R_EDX,&zero);
   }
 
