@@ -33,7 +33,7 @@ PA2.2 Add
 make_EHelper(xor) {
   rtlreg_t tmp;
   rtl_xor(&tmp,&id_dest->val,&id_src->val);
-  operand_write(id_dest,&ttmp);
+  operand_write(id_dest,&tmp);
   t2 = 0;
   rtl_set_CF(&t2);
   rtl_set_OF(&t2);
