@@ -248,55 +248,55 @@ jmpInfo jmp_info[MAXDETECTSIZE];
 int jmpcnt = 0;
 static inline void update_eip(void) {
   //是否发生了跳转 发生了跳转就进入跳转之后的eip地址,否则的话就进入正常的eip地址.
-  if(decoding.is_jmp){
-    bool check = false;
-    if(jmpcnt != MAXDETECTSIZE){
-      int iter;
-      for(iter = 0;iter < jmpcnt;++iter){
+  // if(decoding.is_jmp){
+  //   bool check = false;
+  //   if(jmpcnt != MAXDETECTSIZE){
+  //     int iter;
+  //     for(iter = 0;iter < jmpcnt;++iter){
 
-        if(jmp_info[iter].addr == cpu.eip){
-          check = true;
-          if(is_cpu_eq(jmp_info[iter].cpuShot,cpu) && jmp_info[iter].nxtAddr == decoding.jmp_eip){
-            if(jmp_info[iter]._instr.opcode == decoding.opcode && jmp_info[iter]._instr.v1 == id_dest->val 
-            && jmp_info[iter]._instr.v2 == id_src->val && jmp_info[iter]._instr.v3 == id_src2->val
-            && jmp_info[iter]._instr.tp1 == id_dest->type && jmp_info[iter]._instr.tp2 == id_src->type
-            && jmp_info[iter]._instr.tp3 == id_src2->type ){
-            printf("Your program may have infinite loop,please check! \n");
-            nemu_state = NEMU_END;
-            }
-          }
-          else
-          {
-            memcpy(&jmp_info[iter].cpuShot,&cpu,sizeof(CPU_state));
-            jmp_info[iter].nxtAddr = decoding.jmp_eip;
-            jmp_info[iter]._instr.opcode = decoding.opcode;
-            jmp_info[iter]._instr.v1 = id_dest->val;
-            jmp_info[iter]._instr.v2 = id_src->val;
-            jmp_info[iter]._instr.v3 = id_src2->val;
-            jmp_info[iter]._instr.tp1 = id_dest->type;
-            jmp_info[iter]._instr.tp2 = id_src->type;
-            jmp_info[iter]._instr.tp3 = id_src2->type;
-          }
-          break;
-        }
+  //       if(jmp_info[iter].addr == cpu.eip){
+  //         check = true;
+  //         if(is_cpu_eq(jmp_info[iter].cpuShot,cpu) && jmp_info[iter].nxtAddr == decoding.jmp_eip){
+  //           if(jmp_info[iter]._instr.opcode == decoding.opcode && jmp_info[iter]._instr.v1 == id_dest->val 
+  //           && jmp_info[iter]._instr.v2 == id_src->val && jmp_info[iter]._instr.v3 == id_src2->val
+  //           && jmp_info[iter]._instr.tp1 == id_dest->type && jmp_info[iter]._instr.tp2 == id_src->type
+  //           && jmp_info[iter]._instr.tp3 == id_src2->type ){
+  //           printf("Your program may have infinite loop,please check! \n");
+  //           nemu_state = NEMU_END;
+  //           }
+  //         }
+  //         else
+  //         {
+  //           memcpy(&jmp_info[iter].cpuShot,&cpu,sizeof(CPU_state));
+  //           jmp_info[iter].nxtAddr = decoding.jmp_eip;
+  //           jmp_info[iter]._instr.opcode = decoding.opcode;
+  //           jmp_info[iter]._instr.v1 = id_dest->val;
+  //           jmp_info[iter]._instr.v2 = id_src->val;
+  //           jmp_info[iter]._instr.v3 = id_src2->val;
+  //           jmp_info[iter]._instr.tp1 = id_dest->type;
+  //           jmp_info[iter]._instr.tp2 = id_src->type;
+  //           jmp_info[iter]._instr.tp3 = id_src2->type;
+  //         }
+  //         break;
+  //       }
 
-      }
+  //     }
 
-      if(!check){
-        //没有找到
-        memcpy(&jmp_info[jmpcnt].cpuShot,&cpu,sizeof(CPU_state));
-        jmp_info[jmpcnt].nxtAddr = decoding.jmp_eip; 
-        jmp_info[jmpcnt].addr = cpu.eip;
-        jmp_info[jmpcnt]._instr.opcode = decoding.opcode;
-        jmp_info[jmpcnt]._instr.v1 = id_dest->val;
-        jmp_info[jmpcnt]._instr.v2 = id_src->val;
-        jmp_info[jmpcnt]._instr.v3 = id_src2->val;
-        jmp_info[jmpcnt]._instr.tp1 = id_dest->type;
-        jmp_info[jmpcnt]._instr.tp2 = id_src->type;
-        jmp_info[jmpcnt++]._instr.tp3 = id_src2->type;
-      }
-    }
-  }
+  //     if(!check){
+  //       //没有找到
+  //       memcpy(&jmp_info[jmpcnt].cpuShot,&cpu,sizeof(CPU_state));
+  //       jmp_info[jmpcnt].nxtAddr = decoding.jmp_eip; 
+  //       jmp_info[jmpcnt].addr = cpu.eip;
+  //       jmp_info[jmpcnt]._instr.opcode = decoding.opcode;
+  //       jmp_info[jmpcnt]._instr.v1 = id_dest->val;
+  //       jmp_info[jmpcnt]._instr.v2 = id_src->val;
+  //       jmp_info[jmpcnt]._instr.v3 = id_src2->val;
+  //       jmp_info[jmpcnt]._instr.tp1 = id_dest->type;
+  //       jmp_info[jmpcnt]._instr.tp2 = id_src->type;
+  //       jmp_info[jmpcnt++]._instr.tp3 = id_src2->type;
+  //     }
+  //   }
+  // }
 
   cpu.eip = (decoding.is_jmp ? (decoding.is_jmp = 0, decoding.jmp_eip) : decoding.seq_eip);
 }
