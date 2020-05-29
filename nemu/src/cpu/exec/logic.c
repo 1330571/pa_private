@@ -110,10 +110,10 @@ make_EHelper(rol) {
   rtlreg_t T0,T1,T2;
   for(T0 = 0 ; T0 < id_src->val ; ++T0){
     rtl_shri(&T1,&id_dest->val,id_dest->width* 8 - 1);
-    rtl_shli(&t2,&id_dest->val,1);
-    id_dest->val = t1+t2;
+    rtl_shli(&T2,&id_dest->val,1);
+    id_dest->val = T1+T2;
   }
-  rtl_set_CF(&t1);
+  rtl_set_CF(&T1);
   operand_write(id_dest,&id_dest->val);
   print_asm_template2(rol);
 }
