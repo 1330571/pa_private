@@ -234,6 +234,7 @@ bool is_cpu_eq(CPU_state a,CPU_state b){
 typedef struct{
   uint32_t opcode;
   uint32_t v1,v2,v3;
+  uint32_t tp1,tp2,tp3;
 }instr;
 
 typedef struct{
@@ -257,7 +258,9 @@ static inline void update_eip(void) {
           check = true;
           if(is_cpu_eq(jmp_info[iter].cpuShot,cpu) && jmp_info[iter].nxtAddr == decoding.jmp_eip){
             if(jmp_info[iter]._instr.opcode == decoding.opcode && jmp_info[iter]._instr.v1 == id_dest->val 
-            && jmp_info[iter]._instr.v2 == id_src->val && jmp_info[iter]._instr.v3 == id_src2->val){
+            && jmp_info[iter]._instr.v2 == id_src->val && jmp_info[iter]._instr.v3 == id_src2->val
+            && jmp_info[iter]._instr.tp1 == id_dest->type && jmp_info[iter]._instr.tp2 == id_src->type
+            && jmp_info[iter]._instr.tp3 == id_src2->type ){
             printf("Your program may have infinite loop,please check! \n");
             nemu_state = NEMU_END;
             }
@@ -270,6 +273,9 @@ static inline void update_eip(void) {
             jmp_info[iter]._instr.v1 = id_dest->val;
             jmp_info[iter]._instr.v2 = id_src->val;
             jmp_info[iter]._instr.v3 = id_src2->val;
+            jmp_info[iter]._instr.tp1 = id_dest->type;
+            jmp_info[iter]._instr.tp2 = id_src->type;
+            jmp_info[iter]._instr.tp3 = id_src2->type;
           }
           break;
         }
@@ -284,7 +290,10 @@ static inline void update_eip(void) {
         jmp_info[jmpcnt]._instr.opcode = decoding.opcode;
         jmp_info[jmpcnt]._instr.v1 = id_dest->val;
         jmp_info[jmpcnt]._instr.v2 = id_src->val;
-        jmp_info[jmpcnt++]._instr.v3 = id_src2->val;
+        jmp_info[jmpcnt]._instr.v3 = id_src2->val;
+        jmp_info[jmpcnt]._instr.tp1 = id_dest->type;
+        jmp_info[jmpcnt]._instr.tp2 = id_src->type;
+        jmp_info[jmpcnt++]._instr.tp3 = id_src2->type;
       }
     }
   }
