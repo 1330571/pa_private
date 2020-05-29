@@ -107,7 +107,7 @@ make_EHelper(not) {
 
 make_EHelper(rol) {
   //循环n次
-  rtlreg_t T0,T1,T2;
+  rtlreg_t T0,T1 = 0,T2 = 0;
   for(T0 = 0 ; T0 < id_src->val ; ++T0){
     rtl_shri(&T1,&id_dest->val,id_dest->width* 8 - 1);
     rtl_shli(&T2,&id_dest->val,1);
