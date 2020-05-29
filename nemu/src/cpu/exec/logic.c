@@ -112,7 +112,7 @@ make_EHelper(rol) {
   for(int i = 0 ; i < id_src->val ; ++i){
     rtl_msb(&head,&v,id_dest->width);
     rtl_shli(&v,&v,1);
-    rtl_or(&v,&v,head);
+    rtl_or(&v,&v,&head);
   }
   rtl_set_CF(&head);
   operand_write(id_dest,&v);
