@@ -107,13 +107,14 @@ make_EHelper(not) {
 
 make_EHelper(rol) {
   //循环n次
-  rtlreg_t T1,T2;
+  rtlreg_t head,v;
+  rtl_li(v,id_dest->val);
   for(int i = 0 ; i < id_src->val ; ++i){
-    rtl_shri(&T1,&id_dest->val,id_dest->width * 8 - 1); //右移
-    rtl_shli(&T1,&id_dest->val,1); //左移
-    rtl_xori(&T2,&id_dest->val,T1);
+    rtl_msb(&head,&v,id_dest->width);
+    rtl_shli(&v,&v,1);
+    rtl_or(&v,&v,head);
   }
-  rtl_set_CF(&T1);
-  operand_write(id_dest,&T2);
+  rtl_set_CF(&head);
+  operand_write(id_dest,&v);
   print_asm_template2(rol);
 }
