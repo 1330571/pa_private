@@ -249,7 +249,7 @@ static inline void update_eip(void) {
           check = true;
           if(is_cpu_eq(jmp_info[iter].cpuShot,cpu) && jmp_info[iter].nxtAddr == decoding.jmp_eip){
             printf("Your program may have infinite loop,please check! \n");
-            STOP();
+            extern STOP();
           }
           else
           {
