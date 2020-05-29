@@ -107,7 +107,8 @@ make_EHelper(not) {
 
 make_EHelper(rol) {
   //循环n次
-  rtlreg_t head,v;
+  rtlreg_t head = 0,v;
+
   rtl_li(&v,id_dest->val);
   for(int i = 0 ; i < id_src->val ; ++i){
     rtl_msb(&head,&v,id_dest->width);
