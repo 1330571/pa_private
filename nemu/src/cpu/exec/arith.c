@@ -113,7 +113,7 @@ make_EHelper(neg) {
     rtl_set_CF(&tmp);
   }
   tmp = -(id_dest->val);
-  operand_write(id_dest,tmp);
+  operand_write(id_dest,&tmp);
   rtl_update_ZFSF(&tmp,id_dest->width); 
   rtl_xor(&t3,&id_dest->val,&id_src->val);
   rtl_xor(&t1,&id_dest->val,&t2);
