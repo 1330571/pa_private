@@ -226,7 +226,7 @@ make_EHelper(real) {
 }
 
 bool is_cpu_eq(CPU_state a,CPU_state b){
-  if(a.eax != b.eax || a.ebx != b.ebx || a.ebp != b.ebp || a.ecx != b.ecx || a.edx != b.edx || a.esp != b.esp || a.eflags != b.eflags || a.edi != b.edi || a.esi != b.esi)
+  if(a.eax != b.eax || a.ebx != b.ebx || a.ebp != b.ebp || a.ecx != b.ecx || a.edx != b.edx || a.esp != b.esp || a.eflags.v != b.eflags.v || a.edi != b.edi || a.esi != b.esi)
     return false;
   return true;
 }

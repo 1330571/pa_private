@@ -9,7 +9,7 @@ int main() {
 	// }
 
 	// nemu_assert(sum == 5050);
-	while(1,2,3,4,5){
+	while(1){
 		printf("I am infinite loop\n");
 	}
 	return 0;
