@@ -43,8 +43,9 @@ int _read_key() {
   //0x60数据寄存器 0x64状态寄存器 按键出现->状态寄存器为1
   //通码 = 断码 + 0x8000
   uint32_t key = 0;
-  if(inb(0x64)){
+  if(inb(0x64) != 0){
     key = inl(0x60);
-  }
-  return key;
+    return key;
+  }else
+    return _KEY_NONE;
 }
