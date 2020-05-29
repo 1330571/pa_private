@@ -13,7 +13,7 @@ int nemu_state = NEMU_STOP;
 
 void exec_wrapper(bool);
 
-extern void STOP(){
+void STOP(){
   nemu_state = NEMU_END;
 }
 /* Simulate how the CPU works. */
