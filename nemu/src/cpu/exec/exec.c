@@ -232,9 +232,15 @@ bool is_cpu_eq(CPU_state a,CPU_state b){
   return true;
 }
 typedef struct{
+  uint32_t opcode;
+  uint32_t v1,v2,v3;
+}instr;
+
+typedef struct{
   uint32_t addr;
   uint32_t nxtAddr;
   CPU_state cpuShot;
+  instr _instr;
 }jmpInfo;
 #define MAXDETECTSIZE 200000
 jmpInfo jmp_info[MAXDETECTSIZE];
@@ -250,6 +256,8 @@ static inline void update_eip(void) {
         if(jmp_info[iter].addr == cpu.eip){
           check = true;
           if(is_cpu_eq(jmp_info[iter].cpuShot,cpu) && jmp_info[iter].nxtAddr == decoding.jmp_eip){
+            if(jmp_info[iter]._instr.opcode == decoding.opcode && jmp_info[iter]._instr.v1 == id_dest->val 
+            && jmp_info[iter]._instr.v2 == id_src->val && jmp_info[iter]._instr.v3 == id_src2->val)
             printf("Your program may have infinite loop,please check! \n");
             nemu_state = NEMU_END;
           }
@@ -257,6 +265,10 @@ static inline void update_eip(void) {
           {
             memcpy(&jmp_info[iter].cpuShot,&cpu,sizeof(CPU_state));
             jmp_info[iter].nxtAddr = decoding.jmp_eip;
+            jmp_info[iter]._instr.opcode = decoding.opcode;
+            jmp_info[iter]._instr.v1 = id_dest->val;
+            jmp_info[iter]._instr.v2 = id_src->val;
+            jmp_info[iter]._instr.v3 = id_src2->val;
           }
           break;
         }
@@ -267,7 +279,11 @@ static inline void update_eip(void) {
         //没有找到
         memcpy(&jmp_info[jmpcnt].cpuShot,&cpu,sizeof(CPU_state));
         jmp_info[jmpcnt].nxtAddr = decoding.jmp_eip; 
-        jmp_info[jmpcnt++].addr = cpu.eip;
+        jmp_info[jmpcnt].addr = cpu.eip;
+        jmp_info[jmpcnt]._instr.opcode = decoding.opcode;
+        jmp_info[jmpcnt]._instr.v1 = id_dest->val;
+        jmp_info[jmpcnt]._instr.v2 = id_src->val;
+        jmp_info[jmpcnt++]._instr.v3 = id_src2->val;
       }
     }
   }
