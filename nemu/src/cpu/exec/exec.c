@@ -226,6 +226,7 @@ make_EHelper(real) {
 }
 
 bool is_cpu_eq(CPU_state a,CPU_state b){
+  //eax, ecx, edx, ebx, esp, ebp, esi, edi
   if(a.eax != b.eax || a.ebx != b.ebx || a.ebp != b.ebp || a.ecx != b.ecx || a.edx != b.edx || a.esp != b.esp || a.eflags.v != b.eflags.v || a.edi != b.edi || a.esi != b.esi || a.eip != b.eip)
     return false;
   return true;
@@ -254,7 +255,7 @@ static inline void update_eip(void) {
           }
           else
           {
-            memcpy(&jmp_info[iter].cpuShot,&cpu,sizeof(cpu));
+            memcpy(&jmp_info[iter].cpuShot,&cpu,sizeof(CPU_state));
             jmp_info[iter].nxtAddr = decoding.jmp_eip;
           }
           break;
@@ -264,7 +265,7 @@ static inline void update_eip(void) {
 
       if(!check){
         //没有找到
-        memcpy(&jmp_info[jmpcnt].cpuShot,&cpu,sizeof(cpu));
+        memcpy(&jmp_info[jmpcnt].cpuShot,&cpu,sizeof(CPU_state));
         jmp_info[jmpcnt].nxtAddr = decoding.jmp_eip; 
         jmp_info[jmpcnt++].addr = cpu.eip;
       }
