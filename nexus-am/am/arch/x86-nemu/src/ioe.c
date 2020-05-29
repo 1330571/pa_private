@@ -40,5 +40,8 @@ void _draw_sync() {
 }
 
 int _read_key() {
+  //0x60数据寄存器 0x64状态寄存器 按键出现->状态寄存器为1
+  //通码 = 断码 + 0x8000
+  
   return _KEY_NONE;
 }
