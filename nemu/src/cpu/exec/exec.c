@@ -257,9 +257,10 @@ static inline void update_eip(void) {
           check = true;
           if(is_cpu_eq(jmp_info[iter].cpuShot,cpu) && jmp_info[iter].nxtAddr == decoding.jmp_eip){
             if(jmp_info[iter]._instr.opcode == decoding.opcode && jmp_info[iter]._instr.v1 == id_dest->val 
-            && jmp_info[iter]._instr.v2 == id_src->val && jmp_info[iter]._instr.v3 == id_src2->val)
+            && jmp_info[iter]._instr.v2 == id_src->val && jmp_info[iter]._instr.v3 == id_src2->val){
             printf("Your program may have infinite loop,please check! \n");
             nemu_state = NEMU_END;
+            }
           }
           else
           {
