@@ -63,7 +63,7 @@ make_EHelper(sar) {
   op2 = id_src->val;
   rtl_sar(&tmp,&op1,&op2);
   operand_write(id_dest,&tmp);
-  rtl_update_ZF(&tmp, id_dest->width);
+  rtl_update_ZFSF(&tmp, id_dest->width);
   print_asm_template2(sar);
 }
 
@@ -74,7 +74,7 @@ make_EHelper(shl) {
   op2 = id_src->val;
   rtl_shl(&tmp,&op1,&op2);
   operand_write(id_dest,&tmp);
-  rtl_update_ZF(&tmp, id_dest->width);
+  rtl_update_ZFSF(&tmp, id_dest->width);
   print_asm_template2(shl);
 }
 
@@ -85,7 +85,7 @@ make_EHelper(shr) {
   op2 = id_src->val;
   rtl_shr(&tmp,&op1,&op2);
   operand_write(id_dest,&tmp);
-  rtl_update_ZF(&tmp, id_dest->width);
+  rtl_update_ZFSF(&tmp, id_dest->width);
   print_asm_template2(shr);
 }
 
