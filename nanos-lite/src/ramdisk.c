@@ -26,6 +26,6 @@ void init_ramdisk() {
       &ramdisk_start, &ramdisk_end, RAMDISK_SIZE);
 }
 
-size_t get_ramdisk_size() {
+size_t get_ramdisk_size() { // 返回ramdisk的大小, 单位为字节
   return RAMDISK_SIZE;
 }

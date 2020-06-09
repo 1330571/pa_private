@@ -31,8 +31,8 @@ size_t fs_filesz(int fd) {
   return file_table[fd].size;
 }
 
-void ramdisk_read(void *, uint32_t, uint32_t);
-void ramdisk_write(const void *, uint32_t, uint32_t);
+void ramdisk_read(void *, uint32_t, uint32_t); //从ramdisk中`offset`偏移处的`len`字节读入到`buf`中
+void ramdisk_write(const void *, uint32_t, uint32_t); // 把`buf`中的`len`字节写入到ramdisk中`offset`偏移处
 size_t events_read(void *buf, size_t len);
 void dispinfo_read(void *buf, off_t offset, size_t len);
 void fb_write(const void *buf, off_t offset, size_t len);

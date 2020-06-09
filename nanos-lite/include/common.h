@@ -5,6 +5,8 @@
 #include <klib.h>
 #include "debug.h"
 
+extern void ramdisk_read(void *, uint32_t, uint32_t)
+extern size_t get_ramdisk_size();
 typedef char bool;
 #define true 1
 #define false 0

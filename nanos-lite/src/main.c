@@ -19,18 +19,19 @@ int main() {
   Log("'Hello World!' from Nanos-lite");
   Log("Build time: %s, %s", __TIME__, __DATE__);
 
-  init_ramdisk();
+  init_ramdisk(); //磁盘
 
-  init_device();
+  init_device(); //初始化设备
 
 #ifdef HAS_ASYE
   Log("Initializing interrupt/exception handler...");
   init_irq();
 #endif
 
-  init_fs();
+  init_fs(); //初始化 文件系统
 
-  uint32_t entry = loader(NULL, NULL);
+  uint32_t entry = loader(NULL, NULL); //加载程序
+  //将 ramdisk 中从 0 开始的所有内容放置在 0x4000000
   ((void (*)(void))entry)();
 
   panic("Should not reach here");
