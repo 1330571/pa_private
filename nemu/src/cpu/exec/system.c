@@ -4,8 +4,21 @@ void diff_test_skip_qemu();
 void diff_test_skip_nemu();
 
 make_EHelper(lidt) {
-  TODO();
-
+/*
+PA3 6-9 V1.0
+IF OperandSize = 16
+Limit:Base = m16:24
+Else
+Limit:Base = m16:32
+通过 IDTR 中的地址对 IDT 进行索引的时候，需要使用 vaddr_read()。
+*/
+  if(decoding.is_operand_size_16){
+    cpu.IDTR.limit = vaddr_read(id_dest->addr,2);
+    cpu.IDTR.base = vaddr_read(id_dest->addr+2,3);
+  }else{
+    cpu.IDTR.limit = vaddr_read(id_dest->addr,2);
+    cpu.IDTR.base = vaddr_read(id_dest->addr+2,4);
+  }
   print_asm_template1(lidt);
 }
 
@@ -26,8 +39,8 @@ make_EHelper(mov_cr2r) {
 }
 
 make_EHelper(int) {
-  TODO();
-
+  //PA3 Add
+  raise_intr(id_dest->val,decoding.seq_eip);
   print_asm("int %s", id_dest->str);
 
 #ifdef DIFF_TEST
