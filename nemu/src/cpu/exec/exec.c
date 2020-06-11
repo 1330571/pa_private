@@ -225,27 +225,27 @@ make_EHelper(real) {
   idex(eip, &opcode_table[opcode]); // 对opcode进行进一步操作和执行
 }
 
-bool is_cpu_eq(CPU_state a,CPU_state b){
-  //eax, ecx, edx, ebx, esp, ebp, esi, edi
-  if(a.eax != b.eax || a.ebx != b.ebx || a.ebp != b.ebp || a.ecx != b.ecx || a.edx != b.edx || a.esp != b.esp || a.eflags.v != b.eflags.v || a.edi != b.edi || a.esi != b.esi || a.eip != b.eip)
-    return false;
-  return true;
-}
-typedef struct{
-  uint32_t opcode;
-  uint32_t v1,v2,v3;
-  uint32_t tp1,tp2,tp3;
-}instr;
+// bool is_cpu_eq(CPU_state a,CPU_state b){
+//   //eax, ecx, edx, ebx, esp, ebp, esi, edi
+//   if(a.eax != b.eax || a.ebx != b.ebx || a.ebp != b.ebp || a.ecx != b.ecx || a.edx != b.edx || a.esp != b.esp || a.eflags.v != b.eflags.v || a.edi != b.edi || a.esi != b.esi || a.eip != b.eip)
+//     return false;
+//   return true;
+// }
+// typedef struct{
+//   uint32_t opcode;
+//   uint32_t v1,v2,v3;
+//   uint32_t tp1,tp2,tp3;
+// }instr;
 
-typedef struct{
-  uint32_t addr;
-  uint32_t nxtAddr;
-  CPU_state cpuShot;
-  instr _instr;
-}jmpInfo;
-#define MAXDETECTSIZE 200000
-jmpInfo jmp_info[MAXDETECTSIZE];
-int jmpcnt = 0;
+// typedef struct{
+//   uint32_t addr;
+//   uint32_t nxtAddr;
+//   CPU_state cpuShot;
+//   instr _instr;
+// }jmpInfo;
+// #define MAXDETECTSIZE 200000
+// jmpInfo jmp_info[MAXDETECTSIZE];
+// int jmpcnt = 0;
 static inline void update_eip(void) {
   //是否发生了跳转 发生了跳转就进入跳转之后的eip地址,否则的话就进入正常的eip地址.
   // if(decoding.is_jmp){
@@ -297,7 +297,6 @@ static inline void update_eip(void) {
   //     }
   //   }
   // }
-
   cpu.eip = (decoding.is_jmp ? (decoding.is_jmp = 0, decoding.jmp_eip) : decoding.seq_eip);
 }
 
