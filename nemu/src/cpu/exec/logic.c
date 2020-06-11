@@ -52,7 +52,7 @@ make_EHelper(or) {
   rtlreg_t zeroValue = 0;
   rtl_set_CF(&zeroValue);
   rtl_set_ZF(&zeroValue);
-  rtl_update_ZFSF(&id_dest->val,id_dest->width);
+  rtl_update_ZFSF(&res,id_dest->width);
   print_asm_template2(or);
 }
 
