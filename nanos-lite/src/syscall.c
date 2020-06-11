@@ -42,6 +42,7 @@ _RegSet* do_syscall(_RegSet *r) {
   switch (a[0]) {
     case SYS_write:{
       SYSCALL_ARG1(r) = sys_write(a[1],a[2],a[3]);
+      break;
     }
     case SYS_none:{
       SYSCALL_ARG1(r) = 1;
