@@ -178,6 +178,8 @@ void difftest_step(uint32_t eip) {
   if(eflags2.SF != cpu.eflags.SF) diff = true;
   if(eflags2.OF != cpu.eflags.OF) diff = true;
   if(eflags2.CF != cpu.eflags.CF) diff = true;
+  if(r.cs != cpu.cs) diff=true;
+
   if (diff) {
 
     printf("eip r=%-10x cpu=%-10x\n",r.eip,cpu.eip);
@@ -189,7 +191,8 @@ void difftest_step(uint32_t eip) {
     printf("edi r=%-10x cpu=%-10x\n",r.edi,cpu.edi);
     printf("esi r=%-10x cpu=%-10x\n",r.esi,cpu.esi);
     printf("ebp r=%-10x cpu=%-10x\n",r.ebp,cpu.ebp);
-    
+    printf("ebp r=%-10x cpu=%-10x\n",r.cs,cpu.cs);
+
     printf("ZF SF OF CF: %d %d %d %d\n",cpu.eflags.ZF,cpu.eflags.SF,cpu.eflags.OF,cpu.eflags.CF);
 
     printf("ZF SF OF CF: %d %d %d %d\n",eflags2.ZF,eflags2.SF,eflags2.OF,eflags2.CF);
