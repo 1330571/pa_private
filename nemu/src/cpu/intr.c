@@ -7,7 +7,7 @@ void raise_intr(uint8_t NO, vaddr_t ret_addr) {
    */
   rtl_push(&cpu.eflags.v);
   rtl_push(&cpu.cs);
-  rtl_push(&cpu.eip);
+  rtl_push(&ret_addr);
   //依次入栈，有用的部分，前4位： 31..16 15  后4位： 15..0
   assert(NO*8 <= cpu.IDTR.limit);
   vaddr_t addr = cpu.IDTR.base + 8 * NO;
