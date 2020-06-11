@@ -49,7 +49,7 @@ _RegSet* do_syscall(_RegSet *r) {
       break;
     }
     case SYS_exit: {
-      _halt(SYSCALL_ARG2(r));
+      _halt((int)SYSCALL_ARG2(r));
       break;
     }
     default: panic("Unhandled syscall ID = %d", a[0]);

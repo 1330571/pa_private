@@ -6,7 +6,6 @@ extern void ramdisk_read(void *buf, off_t offset, size_t len);
 extern size_t get_ramdisk_size();
 
 uintptr_t loader(_Protect *as, const char *filename) {
-  // TODO();
   //PA3 Add data:6.9 V 0.0
   //loader() 函数在 nanos-lite/src/loader.c 中定义，其中的 as 参数目前暂不使用，
   //可以忽略，而因为 ramdisk 中目前只要一个文件，filename 参数也可以忽略。

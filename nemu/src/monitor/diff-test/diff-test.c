@@ -172,7 +172,7 @@ void difftest_step(uint32_t eip) {
     };
     uint32_t v;
   }eflags2;
-
+  
   eflags2.v = r.eflags;
   if(eflags2.ZF != cpu.eflags.ZF) diff = true;
   if(eflags2.SF != cpu.eflags.SF) diff = true;

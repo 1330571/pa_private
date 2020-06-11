@@ -59,8 +59,8 @@ typedef struct {
   rtlreg_t cs;
   struct 
   {
-    uint16_t limit;
     uint32_t base;
+    uint16_t limit;
   }IDTR;
 
 } CPU_state;
