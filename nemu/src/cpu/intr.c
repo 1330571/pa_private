@@ -13,7 +13,7 @@ void raise_intr(uint8_t NO, vaddr_t ret_addr) {
   vaddr_t addr = cpu.IDTR.base + 8 * NO;
   uint32_t high_bit = vaddr_read(addr+4,4) & 0xffff0000, low_bit = vaddr_read(addr,4)&0x0000ffff;//上层31.。16 以及 下层15.。0
   decoding.is_jmp = 1;
-  decoding.jmp_eip = high_bit|low_bit;
+  decoding.jmp_eip = high_bit + low_bit;
 }
 
 void dev_raise_intr() {
