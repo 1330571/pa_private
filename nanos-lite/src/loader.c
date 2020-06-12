@@ -1,4 +1,5 @@
 #include "common.h"
+#include "fs.h"
 
 #define DEFAULT_ENTRY ((void *)0x4000000)
 
@@ -10,6 +11,9 @@ uintptr_t loader(_Protect *as, const char *filename) {
   //loader() 函数在 nanos-lite/src/loader.c 中定义，其中的 as 参数目前暂不使用，
   //可以忽略，而因为 ramdisk 中目前只要一个文件，filename 参数也可以忽略。
   //我们只需要用到 ramdisk_read 函数，其中第一个参数填入 DEFAULT_ENTRY，偏移量为 0，长度为 ramdisk 的大小即可。
-  ramdisk_read(DEFAULT_ENTRY,0,get_ramdisk_size());
+  // ramdisk_read(DEFAULT_ENTRY,0,get_ramdisk_size());
+  int fd = fs_open(filename,0,0); //无需考虑flags和mode
+  fs_read(fd, DEFAULT_ENTRY, fs_filesz(fd)); //读取文件到ENTRY位置
+  fs_close(fd); //释放文件资源
   return (uintptr_t)DEFAULT_ENTRY;
 }
