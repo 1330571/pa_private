@@ -30,7 +30,7 @@ int main() {
 
   init_fs(); //初始化 文件系统
 
-  uint32_t entry = loader(NULL, "/bin/hello"); //加载程序
+  uint32_t entry = loader(NULL, "/bin/text"); //加载程序
   //将 ramdisk 中从 0 开始的所有内容放置在 0x4000000
   ((void (*)(void))entry)();
 
