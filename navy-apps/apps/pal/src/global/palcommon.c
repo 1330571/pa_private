@@ -734,7 +734,7 @@ PAL_MKFGetChunkSize(
 }
 
 INT
-PAL_MKFReadChunk(
+PAL_MKChunk(
    LPBYTE          lpBuffer,
    UINT            uiBufferSize,
    UINT            uiChunkNum,
