@@ -41,7 +41,7 @@ paddr_t page_translate(vaddr_t vaddr){
   pde.val = paddr_read(page_addr,4); //4byte
   assert(pde.present != 0);
   Log("pde.val=%x\n",pde.val);
-  paddr_t content_addr = (pde.val & 0xfffff000) + (page_addr) * 4;
+  paddr_t content_addr = (pde.val & 0xfffff000) + (page_dir) * 4;
   pte.val = paddr_read(content_addr,4);
   Log("pte.val=%x\n",pte.val);
   assert(pte.present);
