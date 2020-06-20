@@ -41,12 +41,12 @@ paddr_t page_translate(vaddr_t vaddr){
   pde.val = paddr_read(page_addr,4); //4byte
   assert(pde.present != 0);
   Log("pde.val=%x\n",pde.val);
-  paddr_t content_addr = pde.val & 0xfffff000 + (page_addr) * 4;
+  paddr_t content_addr = (pde.val & 0xfffff000) + (page_addr) * 4;
   pte.val = paddr_read(content_addr,4);
   Log("pte.val=%x\n",pte.val);
   assert(pte.present);
   //Load successfully
-  paddr_t final_addr = pte.val & 0xfffff000 + offest;
+  paddr_t final_addr = (pte.val & 0xfffff000) + offest;
   pte.accessed = 1;
   if(pte.accessed == 0 || (pte.dirty == 0 && is_writing)){
     pte.accessed = 1;
@@ -63,7 +63,7 @@ uint32_t vaddr_read(vaddr_t addr, int len) {
   is_writing = false;
   if(cpu.cr0.paging){
     //越界
-    if(addr & 0xfff + len > 0x1000){
+    if((addr & 0xfff + len) > 0x1000){
       assert(0);
     }else{
       paddr_t paddr = page_translate(addr);
@@ -77,7 +77,7 @@ void vaddr_write(vaddr_t addr, int len, uint32_t data) {
   // paddr_write(addr, len, data);
   is_writing = true;
   if(cpu.cr0.paging){
-    if(addr & 0xfff + len > 0x1000){
+    if((addr & 0xfff + len) > 0x1000){
       assert(0);
     }else{
       paddr_t paddr = page_translate(addr);
