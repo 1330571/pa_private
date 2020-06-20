@@ -40,10 +40,10 @@ paddr_t page_translate(vaddr_t vaddr){
   paddr_t page_addr = (cpu.cr3.page_directory_base << 12) + (catalog_dir) * 4;
   pde.val = paddr_read(page_addr,4); //4byte
   assert(pde.present != 0);
-  LOG("pde.val=%x\n",pde.val);
+  Log("pde.val=%x\n",pde.val);
   paddr_t content_addr = pde.val & 0xfffff000 + (page_addr) * 4;
   pte.val = paddr_read(content_addr,4);
-  LOG("pte.val=%x\n",pte.val);
+  Log("pte.val=%x\n",pte.val);
   assert(pte.present);
   //Load successfully
   paddr_t final_addr = pte.val & 0xfffff000 + offest;
