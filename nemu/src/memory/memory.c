@@ -92,9 +92,10 @@ void vaddr_write(vaddr_t addr, int len, uint32_t data) {
       int len2 = addr + len - 0x1000;
       uint32_t part1 = page_translate(addr);
       uint32_t part2 = page_translate(addr+len1);
-      uint32_t content1 = paddr_read(part1,len1);
-      uint32_t content2 = paddr_read(part2,len2);
-      return (content2 << (len1 << 3)) + content1;
+      
+      paddr_write(part1,len1,data); //write会自动省略后面部分
+      uint32_t data2 = data >> (len1 << 3); 
+      paddr_write(part2,len2,data2);
     }else{
       paddr_t paddr = page_translate(addr);
       paddr_write(paddr,len,data);
