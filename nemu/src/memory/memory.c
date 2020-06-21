@@ -68,7 +68,7 @@ uint32_t vaddr_read(vaddr_t addr, int len) {
     //越界
     if(((addr & 0xfff) + len) > 0x1000){
       int len1 = 0x1000 - (addr & 0xfff);
-      int len2 = addr + len - 0x1000;
+      int len2 = (addr & 0xfff) + len - 0x1000;
       uint32_t part1 = page_translate(addr);
       uint32_t part2 = page_translate(addr+len1);
       uint32_t content1 = paddr_read(part1,len1);
@@ -89,7 +89,7 @@ void vaddr_write(vaddr_t addr, int len, uint32_t data) {
   if(cpu.cr0.paging){
     if(((addr & 0xfff) + len) > 0x1000){
       int len1 = 0x1000 - (addr & 0xfff);
-      int len2 = addr + len - 0x1000;
+      int len2 = (addr & 0xfff) + len - 0x1000;
       uint32_t part1 = page_translate(addr);
       uint32_t part2 = page_translate(addr+len1);
       
