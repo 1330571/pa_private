@@ -24,9 +24,9 @@ Limit:Base = m16:32
 
 make_EHelper(mov_r2cr) {
   switch(id_dest->reg){
-    case 0: cpu.cr0.val = id_src->val;break;
-    case 3: cpu.cr3.val = id_src->val;break;
-    default: assert(0);break;
+    case 0: {cpu.cr0.val = id_src->val;break;}
+    case 3: {cpu.cr3.val = id_src->val;break;}
+    default: {assert(0);break;}
   }
 
   print_asm("movl %%%s,%%cr%d", reg_name(id_src->reg, 4), id_dest->reg);
@@ -34,9 +34,9 @@ make_EHelper(mov_r2cr) {
 
 make_EHelper(mov_cr2r) {
   switch(id_dest->reg){
-    case 0:id_src->val = cpu.cr0.val;break;
-    case 3:id_src->val = cpu.cr3.val;break;
-    default: assert(0);break;
+    case 0:{id_src->val = cpu.cr0.val;break;}
+    case 3:{id_src->val = cpu.cr3.val;break;}
+    default: {assert(0);break;}
   }
 
   print_asm("movl %%cr%d,%%%s", id_src->reg, reg_name(id_dest->reg, 4));
