@@ -51,7 +51,7 @@ _RegSet* do_syscall(_RegSet *r) {
     }
     case SYS_brk: {
       // SYSCALL_ARG1(r) = 0; //成功
-      SYSCALL_ARG1(r) = sys_brk(a[1]);
+      SYSCALL_ARG1(r) = mm_brk(SYSCALL_ARG2(r));
       break;
     }
     case SYS_open: {
