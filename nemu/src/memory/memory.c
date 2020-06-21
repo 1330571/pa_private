@@ -37,15 +37,15 @@ paddr_t page_translate(vaddr_t vaddr){
   paddr_t catalog_dir = (vaddr >> 22);
   paddr_t page_dir = (vaddr >> 12) & 0x3ff;
   paddr_t offest = vaddr & 0xfff;
-  Log("目录索引:0x%x 页表索引:0x%x 页内偏移:0x%x",catalog_dir,page_dir,offest);
+  // Log("目录索引:0x%x 页表索引:0x%x 页内偏移:0x%x",catalog_dir,page_dir,offest);
   paddr_t page_addr = (cpu.cr3.page_directory_base << 12) + (catalog_dir) * 4;
   pde.val = paddr_read(page_addr,4); //4byte
   assert(pde.present);
-  Log("pde.val=%x pde.addr=%x",pde.val,page_addr);
+  // Log("pde.val=%x pde.addr=%x",pde.val,page_addr);
   paddr_t content_addr = (pde.val & 0xfffff000) + (page_dir) * 4;
 
   pte.val = paddr_read(content_addr,4);
-  Log("pte.val=%x pte.addr=%x",pte.val,content_addr);
+  // Log("pte.val=%x pte.addr=%x",pte.val,content_addr);
   assert(pte.present);
   //Load successfully
   paddr_t final_addr = (pte.val & 0xfffff000) + offest;
