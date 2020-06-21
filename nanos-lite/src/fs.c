@@ -38,7 +38,7 @@ void dispinfo_read(void *buf, off_t offset, size_t len);
 void fb_write(const void *buf, off_t offset, size_t len);
 
 int fs_open(const char *pathname, int flags, int mode) {
-  Log("Reading... %s",filename);
+  Log("Reading... %s",pathname);
   int i;
   Log("NR Files %s",NR_FILES);
   for (i = 0; i < NR_FILES; i ++) {
