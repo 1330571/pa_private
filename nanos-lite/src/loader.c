@@ -37,8 +37,8 @@ uintptr_t loader(_Protect *as, const char *filename) {
     fs_read(fd,pa,PGSIZE); //Read a new page
     va += PGSIZE;
   }
-  int tmp;
-  sscanf("%d",&tmp);
+  int tt = 0;
+  for(tt;tt<1000;tt=tt){}
   fs_close(fd); //释放文件资源
   return (uintptr_t)DEFAULT_ENTRY;
 }
