@@ -24,10 +24,10 @@ uintptr_t loader(_Protect *as, const char *filename) {
   读一页内容，写到这个物理页上
   每一页都处理完毕后，关闭文件，并返回程序入口点地址（虚拟地址）
   */
-  printf("loader start to work\n");
   int fd = fs_open(filename,0,0); //无需考虑flags和mode
   // fs_read(fd, DEFAULT_ENTRY, fs_filesz(fd)); //读取文件到ENTRY位置
   size_t sz = fs_filesz(fd);
+  printf("loader start to work sizefile = %d Bytes\n",sz);
   int pages = sz / PGSIZE + (sz % PGSIZE != 0);
   void *va = DEFAULT_ENTRY;
   for(int i = 0 ; i < pages ; ++i){
