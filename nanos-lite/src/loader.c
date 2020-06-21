@@ -38,7 +38,7 @@ uintptr_t loader(_Protect *as, const char *filename) {
     fs_read(fd,pa,PGSIZE); //Read a new page
     va += PGSIZE;
   }
-  printf("loader works finish");
+  printf("loader works finish\n");
   fs_close(fd); //释放文件资源  
   return (uintptr_t)DEFAULT_ENTRY;
 }

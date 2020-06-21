@@ -67,7 +67,14 @@ uint32_t vaddr_read(vaddr_t addr, int len) {
   if(cpu.cr0.paging){
     //越界
     if(((addr & 0xfff) + len) > 0x1000){
-      assert(0);
+      int len1 = 0x1000 - (addr & 0xfff);
+      int len2 = addr + len - 0x1000;
+      uint32_t part1 = page_translate(addr);
+      uint32_t part2 = page_translate(addr+len1);
+      uint32_t content1 = paddr_read(part1,len1);
+      uint32_t content2 = paddr_read(part2,len2);
+      return (content2 << (len1 << 3)) + content1;
+
     }else{
       paddr_t paddr = page_translate(addr);
       return paddr_read(paddr,len);
@@ -81,7 +88,13 @@ void vaddr_write(vaddr_t addr, int len, uint32_t data) {
   is_writing = true;
   if(cpu.cr0.paging){
     if(((addr & 0xfff) + len) > 0x1000){
-      assert(0);
+      int len1 = 0x1000 - (addr & 0xfff);
+      int len2 = addr + len - 0x1000;
+      uint32_t part1 = page_translate(addr);
+      uint32_t part2 = page_translate(addr+len1);
+      uint32_t content1 = paddr_read(part1,len1);
+      uint32_t content2 = paddr_read(part2,len2);
+      return (content2 << (len1 << 3)) + content1;
     }else{
       paddr_t paddr = page_translate(addr);
       paddr_write(paddr,len,data);
