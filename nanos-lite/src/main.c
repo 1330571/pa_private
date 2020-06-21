@@ -34,6 +34,6 @@ int main() {
   // uint32_t entry = loader(NULL, "/bin/pal"); //加载程序
   //将 ramdisk 中从 0 开始的所有内容放置在 0x4000000
   // ((void (*)(void))entry)();
-  load_prog("/bin/dummy");
+  load_prog("/bin/pal");
   panic("Should not reach here");
 }
