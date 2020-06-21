@@ -38,10 +38,12 @@ paddr_t page_translate(vaddr_t vaddr){
   paddr_t page_dir = (vaddr >> 12) & 0x3ff;
   paddr_t offest = vaddr & 0xfff;
   paddr_t page_addr = (cpu.cr3.page_directory_base << 12) + (catalog_dir) * 4;
+  
   pde.val = paddr_read(page_addr,4); //4byte
   assert(pde.present);
   Log("pde.val=%x",pde.val);
   paddr_t content_addr = (pde.val & 0xfffff000) + (page_dir) * 4;
+
   pte.val = paddr_read(content_addr,4);
   Log("pte.val=%x",pte.val);
   assert(pte.present);
