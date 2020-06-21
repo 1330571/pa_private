@@ -27,8 +27,9 @@ uintptr_t loader(_Protect *as, const char *filename) {
   int fd = fs_open(filename,0,0); //无需考虑flags和mode
   // fs_read(fd, DEFAULT_ENTRY, fs_filesz(fd)); //读取文件到ENTRY位置
   size_t sz = fs_filesz(fd);
-  printf("loader start to work sizefile = %d Bytes\n",sz);
   int pages = sz / PGSIZE + (sz % PGSIZE != 0);
+  printf("loader start to work sizefile = %d Bytes , %d pages\n",sz,pages);
+
   void *va = DEFAULT_ENTRY;
   for(int i = 0 ; i < pages ; ++i){
     void *pa = new_page();  
