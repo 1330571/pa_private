@@ -55,6 +55,7 @@ paddr_t page_translate(vaddr_t vaddr){
   
   paddr_write(page_addr,4,pde.val); //write back
   paddr_write(content_addr,4,pte.val);  //write back
+  Log("final_addr=%x",final_addr);
   return final_addr;
 }
 
