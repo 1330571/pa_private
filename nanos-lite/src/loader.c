@@ -38,7 +38,7 @@ uintptr_t loader(_Protect *as, const char *filename) {
     va += PGSIZE;
   }
   int tmp;
-  scanf("%d",&tmp);
+  sscanf("%d",&tmp);
   fs_close(fd); //释放文件资源
   return (uintptr_t)DEFAULT_ENTRY;
 }
