@@ -40,7 +40,7 @@ void fb_write(const void *buf, off_t offset, size_t len);
 int fs_open(const char *pathname, int flags, int mode) {
   Log("Reading... %s",pathname);
   int i;
-  Log("NR Files %s",NR_FILES);
+  Log("NR Files =%d",NR_FILES);
   for (i = 0; i < NR_FILES; i ++) {
     if (strcmp(file_table[i].name, pathname) == 0) {
       file_table[i].open_offset = 0;
