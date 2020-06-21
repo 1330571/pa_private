@@ -38,12 +38,14 @@ void dispinfo_read(void *buf, off_t offset, size_t len);
 void fb_write(const void *buf, off_t offset, size_t len);
 
 int fs_open(const char *pathname, int flags, int mode) {
+  Log("Reading... %s",filename);
   int i;
   for (i = 0; i < NR_FILES; i ++) {
     if (strcmp(file_table[i].name, pathname) == 0) {
       file_table[i].open_offset = 0;
       return i;
     }
+    Log("Trying %s",file_table[i].name);
   }
 
   panic("No such file: %s", pathname);

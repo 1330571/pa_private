@@ -24,7 +24,6 @@ uintptr_t loader(_Protect *as, const char *filename) {
   读一页内容，写到这个物理页上
   每一页都处理完毕后，关闭文件，并返回程序入口点地址（虚拟地址）
   */
-  Log("Reading... %s",filename);
   int fd = fs_open(filename,0,0); //无需考虑flags和mode
   // fs_read(fd, DEFAULT_ENTRY, fs_filesz(fd)); //读取文件到ENTRY位置
   size_t sz = fs_filesz(fd);
